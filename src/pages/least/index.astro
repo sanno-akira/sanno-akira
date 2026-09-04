@@ -1,0 +1,121 @@
+---
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('least');
+const sorted = allPosts.sort((a, b) => a.data.num.localeCompare(b.data.num));
+
+const posts = sorted.map(e => ({
+  id: e.id,
+  num: e.data.num,
+  title: e.data.title,
+  description: e.data.description,
+}));
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My 100 Least Favorite Things | 山王晶</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #fff; color: #1a1a1a; }
+    .site-nav { max-width: 860px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid #ddd; }
+    .site-nav a { font-size: 12px; color: #888; text-decoration: none; }
+    .site-nav a:hover { color: #1a1a1a; }
+    .site-logo { font-family: 'Noto Serif JP', serif; font-size: 14px; font-weight: 700; color: #1a1a1a; text-decoration: none; }
+    .page-header { max-width: 860px; margin: 0 auto; padding: 28px 24px 20px; border-bottom: 0.5px solid #ddd; }
+    .page-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .page-desc { font-size: 12px; color: #888; }
+    .result-info { max-width: 860px; margin: 0 auto; padding: 10px 24px; font-size: 11px; color: #aaa; border-bottom: 0.5px solid #ddd; }
+    .card-list { max-width: 860px; margin: 0 auto; }
+    .card { display: flex; border-bottom: 0.5px solid #ddd; text-decoration: none; color: #1a1a1a; }
+    .card:hover { background: #fafafa; }
+    .card-inner { padding: 14px 24px; flex: 1; }
+    .card-num { font-size: 11px; color: #aaa; margin-bottom: 3px; }
+    .card-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; line-height: 1.4; }
+    .card-desc { font-size: 12px; color: #666; line-height: 1.7; font-family: 'Noto Serif JP', serif; }
+    .no-results { max-width: 860px; margin: 40px auto; padding: 0 24px; font-size: 13px; color: #aaa; text-align: center; display: none; }
+    .pagination { max-width: 860px; margin: 0 auto; padding: 24px; display: flex; justify-content: space-between; align-items: center; border-top: 0.5px solid #ddd; }
+    .pagination-btn { font-size: 12px; border: 0.5px solid #ccc; padding: 8px 20px; cursor: pointer; background: #fff; color: #555; font-family: 'Noto Sans JP', sans-serif; }
+    .pagination-btn:hover:not(:disabled) { background: #f5f5f5; border-color: #999; }
+    .pagination-btn:disabled { color: #ccc; border-color: #eee; cursor: default; }
+    .pagination-info { font-size: 11px; color: #aaa; }
+    @media (max-width: 640px) {
+      .site-nav, .page-header, .result-info, .card-list, .no-results, .pagination { padding-left: 16px; padding-right: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="/" class="site-logo">山王晶</a>
+    <a href="/">← トップへ戻る</a>
+  </nav>
+  <div class="page-header">
+    <div class="page-title">My 100 Least Favorite Things</div>
+    <div class="page-desc">私が嫌いなヒト・コト・モノについての100のコラム。</div>
+  </div>
+  <div class="result-info" id="result-info">全{posts.length}件</div>
+  <div class="card-list" id="card-list">
+    {posts.map(p => (
+      <a href={`/least/${p.id}`} class="card">
+        <div class="card-inner">
+          <div class="card-num">【{p.num}】</div>
+          <div class="card-title">{p.title}</div>
+          <div class="card-desc">{p.description}</div>
+        </div>
+      </a>
+    ))}
+  </div>
+  <div class="no-results" id="no-results">該当する記事が見つかりませんでした。</div>
+  <div class="pagination" id="pagination">
+    <button class="pagination-btn" id="prev-btn">← 前のページ</button>
+    <span class="pagination-info" id="pagination-info"></span>
+    <button class="pagination-btn" id="next-btn">次のページ →</button>
+  </div>
+
+  <script>
+    const PER_PAGE = 10;
+    const cards = Array.from(document.querySelectorAll('.card'));
+    const resultInfo = document.getElementById('result-info');
+    const noResults = document.getElementById('no-results');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const paginationInfo = document.getElementById('pagination-info');
+
+    let currentPage = 1;
+
+    function renderPage() {
+      const total = cards.length;
+      const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
+      if (currentPage > totalPages) currentPage = totalPages;
+      const start = (currentPage - 1) * PER_PAGE;
+      const end = start + PER_PAGE;
+
+      cards.forEach((card, i) => {
+        card.style.display = (i >= start && i < end) ? 'flex' : 'none';
+      });
+
+      resultInfo.textContent = total + '件';
+      paginationInfo.textContent = currentPage + ' / ' + totalPages + ' ページ';
+      prevBtn.disabled = currentPage <= 1;
+      nextBtn.disabled = currentPage >= totalPages;
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentPage > 1) { currentPage--; renderPage(); }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      const totalPages = Math.ceil(cards.length / PER_PAGE);
+      if (currentPage < totalPages) { currentPage++; renderPage(); }
+    });
+
+    renderPage();
+  </script>
+</body>
+</html>

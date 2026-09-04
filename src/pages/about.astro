@@ -1,0 +1,90 @@
+---
+import { Image } from 'astro:assets';
+import salamander from '../assets/Salamander_Snno.jpg';
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile & Contact | 山王晶</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #fff; color: #1a1a1a; }
+    .site-nav { max-width: 680px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid #ddd; }
+    .site-nav a { font-size: 12px; color: #888; text-decoration: none; }
+    .site-nav a:hover { color: #1a1a1a; }
+    .site-logo { font-family: 'Noto Serif JP', serif; font-size: 14px; font-weight: 700; color: #1a1a1a; text-decoration: none; }
+    .page { max-width: 680px; margin: 0 auto; padding: 40px 24px 80px; }
+    .page-title { font-family: 'Noto Sans JP', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; color: #aaa; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 0.5px solid #ddd; }
+    .profile-layout { display: grid; grid-template-columns: 1fr 160px; gap: 40px; margin-bottom: 48px; }
+    .section { margin-bottom: 48px; }
+    .section-title { font-size: 11px; color: #aaa; letter-spacing: 0.1em; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 0.5px solid #eee; font-family: 'Noto Sans JP', sans-serif; }
+    .profile-text { font-family: 'Noto Serif JP', serif; font-size: 14px; line-height: 2; color: #1a1a1a; text-align: justify; text-align-last: left; }
+    .profile-text p { margin-bottom: 1.2rem; }
+    .profile-text p:last-child { margin-bottom: 0; }
+    .profile-img { display: flex; align-items: center; justify-content: center; }
+    .profile-img img { width: 140px; height: auto; }
+    .contact-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .contact-list li { display: flex; align-items: baseline; gap: 20px; font-size: 13px; }
+    .contact-label { font-size: 11px; color: #aaa; letter-spacing: 0.08em; flex-shrink: 0; width: 64px; font-family: 'Noto Sans JP', sans-serif; }
+    .contact-value { color: #1a1a1a; font-family: 'Noto Sans JP', sans-serif; }
+    .contact-value a { color: #1a1a1a; text-decoration: none; border-bottom: 0.5px solid #ddd; }
+    .contact-value a:hover { border-bottom-color: #999; }
+    .sns-list { display: flex; gap: 16px; flex-wrap: wrap; }
+    .sns-link { font-size: 12px; color: #1a1a1a; text-decoration: none; border: 0.5px solid #ccc; padding: 6px 16px; font-family: 'Noto Sans JP', sans-serif; }
+    .sns-link:hover { background: #f5f5f5; }
+    @media (max-width: 640px) {
+      .page { padding: 32px 16px 60px; }
+      .profile-layout { grid-template-columns: 1fr; }
+      .profile-img { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="/" class="site-logo">山王晶</a>
+    <a href="/">← トップへ戻る</a>
+  </nav>
+
+  <div class="page">
+    <div class="page-title">PROFILE &amp; CONTACT</div>
+
+    <div class="section">
+      <div class="section-title">PROFILE</div>
+      <div class="profile-layout">
+        <div class="profile-text">
+  <p>山王晶（さんのう あきら）<br>1975年、東京生まれ。乙女座のAB型、図書館司書。名前はサンショウウオのアナグラム（サンショウウオ→サンオウショウ→山王晶）。歳をとって物忘れが激しくなったため、備忘録と脳トレを兼ねてサイトをはじめました。好きなものは各コラムをご覧ください。嫌いなものも。ほか苦手なことは、スポーツ全般と車の運転（ペーパードライバー歴20年）。</p>
+        </div>
+        <div class="profile-img">
+          <Image src={salamander} alt="サンショウウオ" width={140} />
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">CONTACT</div>
+      <ul class="contact-list">
+        <li>
+          <span class="contact-label">Mail</span>
+          <span class="contact-value">
+            <a href="mailto:your@email.com">your@email.com</a>
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-title">SNS</div>
+      <div class="sns-list">
+        <a href="https://facebook.com/" class="sns-link" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://instagram.com/" class="sns-link" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://x.com/" class="sns-link" target="_blank" rel="noopener">X</a>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

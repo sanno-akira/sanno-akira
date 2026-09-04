@@ -1,0 +1,10 @@
+---
+import { getCollection } from 'astro:content';
+const { num } = Astro.props;
+const posts = await getCollection('column');
+const target = posts.find(p => p.data.num === num);
+---
+{target
+  ? <a href={`/column/${target.id}`} style="color: inherit; border-bottom: 0.5px solid #aaa; text-decoration: none;">【{target.data.num}】{target.data.title}</a>
+  : <span>{num}</span>
+}

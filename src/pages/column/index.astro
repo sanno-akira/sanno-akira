@@ -1,0 +1,226 @@
+---
+import { getCollection } from 'astro:content';
+import { GENRE_COLOR } from '../../lib/genreConfig';
+import { REGION_MAP } from '../../lib/regionMap';
+
+const entries = await getCollection('column');
+const sorted = entries.sort((a, b) => a.data.num.localeCompare(b.data.num));
+
+const genres = ['すべて', '文学', '思想', '漫画', '映画', '音楽', '美術', '建築', 'デザイン', 'その他'];
+const eras = ['すべて', '古代', '中世', '近世', '近代', '現代'];
+const regionSet = new Set(sorted.map(e => REGION_MAP[e.data.country] ?? 'その他'));
+const regions = ['すべて', ...Array.from(regionSet)].sort();
+
+const posts = sorted.map(e => ({
+  id: e.id,
+  num: e.data.num,
+  title: e.data.title,
+  author: e.data.author,
+  genre: e.data.genre,
+  era: e.data.era,
+  country: e.data.country,
+  region: REGION_MAP[e.data.country] ?? 'その他',
+  yearLabel: e.data.yearLabel,
+  description: e.data.description,
+  keywords: (e.data.keywords ?? []).join(' '),
+  color: GENRE_COLOR[e.data.genre] ?? '#888',
+}));
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My 1000 Favorite Things | 山王晶</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #fff; color: #1a1a1a; }
+    .site-nav { max-width: 860px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid #ddd; }
+    .site-nav a { font-size: 12px; color: #888; text-decoration: none; }
+    .site-nav a:hover { color: #1a1a1a; }
+    .site-logo { font-family: 'Noto Serif JP', serif; font-size: 14px; font-weight: 700; color: #1a1a1a; text-decoration: none; }
+    .page-header { max-width: 860px; margin: 0 auto; padding: 28px 24px 20px; border-bottom: 0.5px solid #ddd; }
+    .page-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .page-desc { font-size: 12px; color: #888; }
+    .filter-section { max-width: 860px; margin: 0 auto; padding: 20px 24px; border-bottom: 0.5px solid #ddd; display: flex; flex-direction: column; gap: 14px; }
+    .filter-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+    .filter-label { font-size: 11px; color: #888; letter-spacing: 0.08em; flex-shrink: 0; width: 48px; }
+    .filter-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+    .filter-btn { font-size: 11px; border: 0.5px solid #ccc; padding: 4px 10px; cursor: pointer; background: #fff; color: #555; font-family: 'Noto Sans JP', sans-serif; }
+    .filter-btn.active { border-color: #1a1a1a; color: #1a1a1a; background: #f5f5f5; }
+    .search-wrap { display: flex; gap: 8px; flex: 1; }
+    .search-input { flex: 1; font-size: 12px; border: 0.5px solid #ccc; padding: 6px 12px; font-family: 'Noto Sans JP', sans-serif; outline: none; }
+    .search-input:focus { border-color: #999; }
+    .search-btn { font-size: 11px; border: 0.5px solid #ccc; padding: 6px 14px; cursor: pointer; background: #fff; color: #555; font-family: 'Noto Sans JP', sans-serif; }
+    .result-info { max-width: 860px; margin: 0 auto; padding: 10px 24px; font-size: 11px; color: #aaa; border-bottom: 0.5px solid #ddd; }
+    .card-list { max-width: 860px; margin: 0 auto; }
+    .card { display: flex; border-bottom: 0.5px solid #ddd; text-decoration: none; color: #1a1a1a; }
+    .card:hover { background: #fafafa; }
+    .accent-bar { width: 3px; flex-shrink: 0; }
+    .card-inner { padding: 14px 20px; flex: 1; }
+    .card-num { font-size: 11px; color: #aaa; margin-bottom: 2px; }
+    .card-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; line-height: 1.4; }
+    .card-desc { font-size: 12px; color: #666; line-height: 1.6; font-family: 'Noto Serif JP', serif; }
+    .no-results { max-width: 860px; margin: 40px auto; padding: 0 24px; font-size: 13px; color: #aaa; text-align: center; display: none; }
+    .pagination { max-width: 860px; margin: 0 auto; padding: 24px; display: flex; justify-content: space-between; align-items: center; border-top: 0.5px solid #ddd; }
+    .pagination-btn { font-size: 12px; border: 0.5px solid #ccc; padding: 8px 20px; cursor: pointer; background: #fff; color: #555; font-family: 'Noto Sans JP', sans-serif; }
+    .pagination-btn:hover:not(:disabled) { background: #f5f5f5; border-color: #999; }
+    .pagination-btn:disabled { color: #ccc; border-color: #eee; cursor: default; }
+    .pagination-info { font-size: 11px; color: #aaa; }
+    @media (max-width: 640px) {
+      .site-nav, .page-header, .filter-section, .result-info, .card-list, .no-results, .pagination { padding-left: 16px; padding-right: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="/" class="site-logo">山王晶</a>
+    <a href="/">← トップへ戻る</a>
+  </nav>
+  <div class="page-header">
+    <div class="page-title">My 1000 Favorite Things</div>
+    <div class="page-desc">私が好きなヒト・コト・モノについての1000のコラム。</div>
+  </div>
+  <div class="filter-section">
+    <div class="filter-row">
+      <span class="filter-label">ジャンル</span>
+      <div class="filter-btns" id="genre-btns">
+        {genres.map(g => (
+          <button class={g === 'すべて' ? 'filter-btn active' : 'filter-btn'} data-genre={g}>{g}</button>
+        ))}
+      </div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">年代</span>
+      <div class="filter-btns" id="era-btns">
+        {eras.map(e => (
+          <button class={e === 'すべて' ? 'filter-btn active' : 'filter-btn'} data-era={e}>{e}</button>
+        ))}
+      </div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">地域</span>
+      <div class="filter-btns" id="region-btns">
+        {regions.map(r => (
+          <button class={r === 'すべて' ? 'filter-btn active' : 'filter-btn'} data-region={r}>{r}</button>
+        ))}
+      </div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">検索</span>
+      <div class="search-wrap">
+        <input class="search-input" id="search-input" type="text" placeholder="タイトル・作家名・キーワード">
+        <button class="search-btn" id="search-clear">クリア</button>
+      </div>
+    </div>
+  </div>
+  <div class="result-info" id="result-info">全{posts.length}件</div>
+  <div class="card-list" id="card-list">
+    {posts.map(p => (
+      <a href={`/column/${p.id}`} class="card" data-genre={p.genre} data-era={p.era} data-region={p.region} data-search={p.title + ' ' + p.author + ' ' + p.keywords + ' ' + p.description}>
+        <div class="accent-bar" style={`background:${p.color};`}></div>
+        <div class="card-inner">
+         <div class="card-num">【{p.num}】</div>
+         <div class="card-title">{p.title}（{p.yearLabel}）</div>
+         <div class="card-desc">{p.description}</div>
+        </div>
+      </a>
+    ))}
+  </div>
+  <div class="no-results" id="no-results">該当する記事が見つかりませんでした。</div>
+  <div class="pagination" id="pagination">
+    <button class="pagination-btn" id="prev-btn">← 前のページ</button>
+    <span class="pagination-info" id="pagination-info"></span>
+    <button class="pagination-btn" id="next-btn">次のページ →</button>
+  </div>
+
+  <script>
+    const PER_PAGE = 10;
+    const cards = Array.from(document.querySelectorAll('.card'));
+    const resultInfo = document.getElementById('result-info');
+    const noResults = document.getElementById('no-results');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const paginationInfo = document.getElementById('pagination-info');
+
+    let activeGenre = 'すべて';
+    let activeEra = 'すべて';
+    let activeRegion = 'すべて';
+    let searchQuery = '';
+    let currentPage = 1;
+    let filteredCards = [];
+
+    function applyFilter() {
+      filteredCards = cards.filter(card => {
+        const matchGenre = activeGenre === 'すべて' || card.dataset.genre === activeGenre;
+        const matchEra = activeEra === 'すべて' || card.dataset.era === activeEra;
+        const matchRegion = activeRegion === 'すべて' || card.dataset.region === activeRegion;
+        const matchSearch = searchQuery === '' || card.dataset.search.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchGenre && matchEra && matchRegion && matchSearch;
+      });
+      currentPage = 1;
+      renderPage();
+    }
+
+    function renderPage() {
+      const total = filteredCards.length;
+      const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
+      if (currentPage > totalPages) currentPage = totalPages;
+      const start = (currentPage - 1) * PER_PAGE;
+      const end = start + PER_PAGE;
+
+      cards.forEach(card => card.style.display = 'none');
+      filteredCards.slice(start, end).forEach(card => card.style.display = 'flex');
+
+      resultInfo.textContent = total + '件';
+      noResults.style.display = total === 0 ? 'block' : 'none';
+      paginationInfo.textContent = total > 0 ? currentPage + ' / ' + totalPages + ' ページ' : '';
+      prevBtn.disabled = currentPage <= 1;
+      nextBtn.disabled = currentPage >= totalPages;
+
+      // ページ切り替え時に先頭へスクロール
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setupBtns(containerId, key, setter) {
+      document.getElementById(containerId).addEventListener('click', e => {
+        const btn = e.target.closest('.filter-btn');
+        if (!btn) return;
+        document.querySelectorAll('#' + containerId + ' .filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        setter(btn.dataset[key]);
+        applyFilter();
+      });
+    }
+
+    setupBtns('genre-btns', 'genre', v => activeGenre = v);
+    setupBtns('era-btns', 'era', v => activeEra = v);
+    setupBtns('region-btns', 'region', v => activeRegion = v);
+
+    document.getElementById('search-input').addEventListener('input', e => {
+      searchQuery = e.target.value;
+      applyFilter();
+    });
+
+    document.getElementById('search-clear').addEventListener('click', () => {
+      document.getElementById('search-input').value = '';
+      searchQuery = '';
+      applyFilter();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (currentPage > 1) { currentPage--; renderPage(); }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      const totalPages = Math.ceil(filteredCards.length / PER_PAGE);
+      if (currentPage < totalPages) { currentPage++; renderPage(); }
+    });
+
+    // 初期表示
+    applyFilter();
+  </script>
+</body>
+</html>

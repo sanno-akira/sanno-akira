@@ -1,0 +1,106 @@
+---
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('least');
+  return entries.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const article = entry.data;
+
+const allEntries = await getCollection('least');
+const sorted = allEntries.sort((a, b) => a.data.num.localeCompare(b.data.num));
+const currentIndex = sorted.findIndex(e => e.id === entry.id);
+const prev = sorted[currentIndex - 1];
+const next = sorted[currentIndex + 1];
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{article.title} | 山王晶</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #fff; color: #1a1a1a; }
+    .site-nav { max-width: 680px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid #ddd; }
+    .site-nav a { font-size: 12px; color: #888; text-decoration: none; }
+    .site-nav a:hover { color: #1a1a1a; }
+    .site-logo { font-family: 'Noto Serif JP', serif; font-size: 14px; font-weight: 700; color: #1a1a1a; text-decoration: none; }
+    .article { max-width: 680px; margin: 0 auto; padding: 2.5rem 24px 4rem; }
+    .article-meta { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 0.5px solid #ddd; font-family: 'Noto Sans JP', sans-serif; }
+    .article-num { font-size: 11px; color: #aaa; margin-bottom: 8px; }
+    .article-title { font-size: 24px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; }
+    .article-date { font-size: 11px; color: #aaa; }
+    .body { font-size: 17px; line-height: 2; font-family: 'Noto Serif JP', serif; }
+    .body p { margin-bottom: 1.6rem; text-align: justify; text-justify: inter-character; }
+    :global(.body strong) { font-weight: 700; font-family: 'Noto Sans JP', sans-serif; }
+    .body blockquote { border-left: 3px solid #ddd; padding-left: 1.2em; color: #555; margin: 1.6rem 0; }
+    .refs { margin-top: 2rem; padding-top: 1.5rem; border-top: 0.5px solid #ddd; font-family: 'Noto Sans JP', sans-serif; }
+    .refs-title { font-size: 11px; color: #aaa; letter-spacing: .08em; margin-bottom: 10px; }
+    .refs ul { list-style: none; }
+    .refs li { font-size: 12px; color: #666; line-height: 2; }
+    .refs a { color: #666; text-decoration: underline; }
+    .refs a:hover { color: #1a1a1a; }
+    .ref-note { display: block; color: #aaa; font-size: 11px; margin-top: 2px; margin-bottom: 8px; }
+    .article-nav { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 0.5px solid #ddd; gap: 16px; font-family: 'Noto Sans JP', sans-serif; }
+    .article-nav a { font-size: 12px; color: #888; text-decoration: none; line-height: 1.6; max-width: 45%; }
+    .article-nav a:hover { color: #1a1a1a; }
+    .nav-next { text-align: right; }
+    figure { margin: 2rem 0; }
+    figcaption { font-size: 11px; color: #aaa; margin-top: 8px; text-align: center; font-family: 'Noto Sans JP', sans-serif; }
+    @media (max-width: 640px) {
+      .article { padding: 1.5rem 16px 3rem; }
+      .article-title { font-size: 20px; }
+      .body { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="/" class="site-logo">山王晶</a>
+    <a href="/least">← 一覧へ戻る</a>
+  </nav>
+  <article class="article">
+    <div class="article-meta">
+      <div class="article-num">No.{article.num}</div>
+      <h1 class="article-title">{article.title}</h1>
+      <div class="article-date">{article.date}</div>
+    </div>
+    <div class="body">
+      <Content />
+    </div>
+    {article.refs && article.refs.length > 0 && (
+      <div class="refs">
+        <div class="refs-title">参考文献</div>
+        <ul>
+          {article.refs.map(ref => (
+            <li>
+              {ref.url
+                ? <a href={ref.url} target="_blank" rel="noopener">{ref.text}</a>
+                : <span>{ref.text}</span>
+              }
+              {ref.note && <span class="ref-note">{ref.note}</span>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+    <nav class="article-nav">
+      <div class="nav-prev">
+        {prev && <a href={`/least/${prev.id}`}>← {prev.data.num}. {prev.data.title}</a>}
+      </div>
+      <div class="nav-next">
+        {next && <a href={`/least/${next.id}`}>{next.data.num}. {next.data.title} →</a>}
+      </div>
+    </nav>
+  </article>
+</body>
+</html>
