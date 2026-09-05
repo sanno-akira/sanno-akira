@@ -84,12 +84,37 @@ const next = sorted[currentIndex + 1];
       font-family: 'Noto Sans JP', sans-serif;
     }
     .body { font-size: 17px; line-height: 2; }
-    .body p { margin-bottom: 1.6rem; }
-   :global(.body strong) { font-weight: 700; font-family: 'Noto Sans JP', sans-serif; }
-   .body .big-quote { font-size: 28px; font-weight: 700; font-family: 'Noto Sans JP', sans-serif; margin: 2rem 0; color: #1a1a1a; }
-    figure { margin: 2rem 0; }
-    figure img { width: 100%; max-width: 240px; height: auto; display: block; margin: 0 auto; }
-    figcaption { font-size: 11px; color: #aaa; margin-top: 8px; font-family: 'Noto Sans JP', sans-serif; text-align: center; }
+    .body p {
+      margin-bottom: 1.6rem;
+      text-indent: 0;
+    }
+    :global(.body strong) { font-weight: 700; font-family: 'Noto Sans JP', sans-serif; }
+    .body .big-quote {
+      font-size: 28px;
+      font-weight: 700;
+      font-family: 'Noto Sans JP', sans-serif;
+      margin: 2rem 0;
+      color: #1a1a1a;
+    }
+    figure {
+      margin: 2rem 0;
+      width: 100%;
+    }
+    figure img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+    figcaption {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 8px;
+      font-family: 'Noto Sans JP', sans-serif;
+      text-align: center;
+    }
+    blockquote {
       border-left: 3px solid #ddd;
       padding-left: 1.2em;
       color: #555;
@@ -151,10 +176,17 @@ const next = sorted[currentIndex + 1];
     }
     .article-nav a:hover { color: #1a1a1a; }
     .nav-next { text-align: right; }
+
+    /* ── スマホ用調整 ── */
     @media (max-width: 640px) {
+      .site-nav { padding: 12px 16px; }
       .article { padding: 1.5rem 16px 3rem; }
       .article-title { font-size: 20px; }
-      .body { font-size: 16px; }
+      .body { font-size: 16px; line-height: 1.9; }
+      .article-meta-bottom { flex-wrap: wrap; gap: 8px; }
+      .article-nav { flex-direction: column; gap: 12px; }
+      .article-nav a { max-width: 100%; }
+      .nav-next { text-align: left; }
     }
   </style>
 </head>
