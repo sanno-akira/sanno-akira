@@ -18,12 +18,12 @@ const tracks = [
   { num: '002', title: 'シェスタ', titleEn: 'Siesta', desc: 'ハバネラ。やはりキューバ起源で、ソン・クラーヴェよりさらに古いラテンのリズム。この曲は中南米よりニーノ・ロータ風。', instruments: 'Flute, Accordion, Harp, Double Bass, Bongo, Conga, Triangle', img: img02, url: 'https://youtu.be/lHJw3dJfDSU' },
   { num: '003', title: 'トラよ、トラよ！', titleEn: 'Tiger! Tiger!', desc: 'クレズマー。酒乱の友人にからまれた夜に降りてきた曲。なのでタイトルは動物でなく、ウィリアム・ブレイクでもアルフレッド・ベスターでもなく、酔っぱらいのこと。', instruments: 'Clarinet in E♭, Piano, Cimbalom, Violin, Violoncello, Electric Bass, Cymbal, Timpani', img: img03, url: 'https://youtu.be/nJ1LHCN0sr4' },
   { num: '004', title: '歌謡曲風に', titleEn: 'In The Style of Japanese Domestic Songs', desc: 'わざわざ銘打たなくとも自作はすべて歌謡曲風ながら、タイトルの通り。ジンタで奏でる『蒲田行進曲』のイメージ。', instruments: 'Piccolo, Clarinet in B♭, Tuba, Accordion, Banjo, Bass drum, Cymbal, Snare drum', img: img04, url: 'https://youtu.be/qY0Pgq7CkDg' },
-  { num: '005', title: '鬼火', titleEn: 'Le Feu follet', desc: '20世紀初頭のフランスで流行した遅いワルツ（Valse lente）。ジョセフ・コスマのような戦前のフランスの映画音楽、あるいは中島みゆき風。', instruments: 'Alto Flute, Harp, Violin, Violoncello, Electric Bass', img: img05, url: 'https://youtu.be/tItvbD2rHdA' },
+  { num: '005', title: '鬼火', titleEn: 'Le Feu follet', desc: '20世紀初頭のフランスで流行した遅いワルツ（Valse lente）。ジョセフ・コズマやモリス・ジョベールのような戦前の映画音楽、あるいは中島みゆき風。', instruments: 'Alto Flute, Harp, Violin, Violoncello, Electric Bass', img: img05, url: 'https://youtu.be/tItvbD2rHdA' },
   { num: '006', title: '危険な関係', titleEn: 'Les Liaisons dangereuses', desc: 'ヘンリー・マンシーニ『シャレード』(1963)と大野雄二『犬神家の一族』(1976)を足して3で割ったもの。', instruments: 'Harpsichord, Harp, Strings, Electric Bass, Bongo, Conga, Claves, Crotal, Guiro, Timpani', img: img06, url: 'https://youtu.be/KtwDQ97tJNc' },
   { num: '007', title: 'やし酒飲み', titleEn: 'The Palm-Wine Drinkard', desc: '旋法を使った曲。タイトルはナイジェリアの作家、エイモス・チュツオーラ（Amos Tutuola, 1920–1997）の奇想天外な名作（1946）から。', instruments: 'Flute, Oboe, Bassoon, Harp, Electric Bass, Marimba, Talking drum', img: img07, url: 'https://youtu.be/wVwRDCjmUqI' },
   { num: '008', title: 'リー・モーガンの墓', titleEn: 'Le Tombeau de Lee Morgan', desc: '名盤『Moanin\'』(1958)収録の『Are You Real?』でリー・モーガンの吹く一瞬のアドリブが美しく（2\'22くらいのところ）、それを元にしたバロック・ジャズ。', instruments: 'Flute, Harpsichord, Violoncello, Electric Bass, Vibraphone', img: img08, url: 'https://youtu.be/9vCN9SJ4F0w' },
-  { num: '009', title: '牧歌', titleEn: 'Idylle (Emanuel Chabrier)', desc: 'カバー。オリジナルは19世紀フランスの作曲家、エマヌエル・シャブリエ（1841–1894）のピアノ曲集『10の絵画的小品』(1881)中の1曲。', instruments: 'Oboe, Bassoon, Accordion, Harp, Electric Bass', img: img09, url: 'https://youtu.be/gRFjzeZBrxE' },
-  { num: '010', title: 'ボンバイエ・ワルツ', titleEn: 'La Valse de bom-ba-ye', desc: 'アントニオ猪木『炎のファイター』のテーマによる優雅で感傷的なワルツ。', instruments: 'Piano, Accordion, Violin, Violoncello', img: img10, url: 'https://youtu.be/jUBcKV8hzhs' },
+  { num: '009', title: '牧歌', titleEn: 'Idylle (Emanuel Chabrier)', desc: 'カバー。オリジナルは19世紀フランスの作曲家、エマヌエル・シャブリエ（1841–1894）のピアノ曲集『10の絵画的小品』(1881)中の名作。', instruments: 'Oboe, Bassoon, Accordion, Harp, Electric Bass', img: img09, url: 'https://youtu.be/gRFjzeZBrxE' },
+  { num: '010', title: 'ボンバイエ・ワルツ', titleEn: 'La Valse de bom-ba-ye', desc: 'アントニオ猪木『炎のファイター』のテーマによる優雅で感傷的なワルツ。迷わず聴けよ聴けばわかるさ', instruments: 'Piano, Accordion, Violin, Violoncello', img: img10, url: 'https://youtu.be/jUBcKV8hzhs' },
   { num: '011', title: 'フラッパー', titleEn: 'Flapper', desc: 'ブギ・ウギ。タイトルは「Jazz Age」「Roaring Twenties」と謳われた大恐慌時代アメリカの不良少女のこと。デスパレートな跛行リズム。', instruments: 'Flute, Clarinet in B♭, Piano, Violin, Violoncello, Double Bass, Drums', img: img11, url: 'https://youtu.be/qYviG3LQI7U' },
 ];
 ---
@@ -41,7 +41,7 @@ const tracks = [
     .site-nav { max-width: 860px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid #ddd; }
     .site-nav a { font-size: 12px; color: #888; text-decoration: none; }
     .site-nav a:hover { color: #1a1a1a; }
-    .site-logo { font-family: 'Noto Serif JP', serif; font-size: 14px; font-weight: 700; color: #1a1a1a; text-decoration: none; }
+    .site-logo { font-family: 'Noto Serif JP', serif; font-size: 14px; font-weight: 400; color: #1a1a1a; text-decoration: none; -webkit-font-smoothing: antialiased; }
     .page-header { max-width: 860px; margin: 0 auto; padding: 28px 24px 16px; }
     .page-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
     .page-desc { font-size: 12px; color: #1a1a1a; margin-bottom: 8px; }
@@ -50,7 +50,7 @@ const tracks = [
     .track { display: grid; grid-template-columns: 1fr 200px; border-bottom: 0.5px solid #ddd; min-height: 160px; text-decoration: none; color: #1a1a1a; }
     .track:hover { background: #fafafa; }
     .track-inner { padding: 20px 20px 20px 0; }
-    .track-num { font-size: 11px; color: #1a1a1a; font-weight: 400; margin-bottom: 4px; }
+    .track-num { font-size: 11px; color: #aaa; font-weight: 400; margin-bottom: 4px; }
     .track-title { font-size: 15px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; }
     .track-title-en { font-size: 13px; color: #1a1a1a; font-weight: 400; }
     .track-desc { font-size: 12px; color: #444; line-height: 1.7; font-family: 'Noto Serif JP', serif; margin-bottom: 8px; }
@@ -84,7 +84,7 @@ const tracks = [
       {tracks.map(track => (
         <a href={track.url} target="_blank" rel="noopener noreferrer" class="track">
           <div class="track-inner">
-            <div class="track-num">【{track.num}】</div>
+            <div class="track-num">|{track.num}|</div>
             <div class="track-title">{track.title}　<span class="track-title-en">{track.titleEn}</span></div>
             <div class="track-desc">{track.desc}</div>
             <div class="track-instruments">Instruments : {track.instruments}</div>

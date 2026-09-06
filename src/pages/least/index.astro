@@ -25,7 +25,7 @@ const posts = sorted.map(e => ({
     .site-nav { max-width: 860px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid #ddd; }
     .site-nav a { font-size: 12px; color: #888; text-decoration: none; }
     .site-nav a:hover { color: #1a1a1a; }
-    .site-logo { font-family: 'Noto Serif JP', serif; font-size: 14px; font-weight: 700; color: #1a1a1a; text-decoration: none; }
+    .site-logo { font-family: 'Noto Serif JP', serif; font-size: 14px; font-weight: 400; color: #1a1a1a; text-decoration: none; -webkit-font-smoothing: antialiased; }
     .page-header { max-width: 860px; margin: 0 auto; padding: 28px 24px 20px; border-bottom: 0.5px solid #ddd; }
     .page-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
     .page-desc { font-size: 12px; color: #888; }
@@ -62,7 +62,7 @@ const posts = sorted.map(e => ({
     {posts.map(p => (
       <a href={`/least/${p.id}`} class="card">
         <div class="card-inner">
-          <div class="card-num">【{p.num}】</div>
+          <div class="card-num">|{p.num}|</div>
           <div class="card-title">{p.title}</div>
           <div class="card-desc">{p.description}</div>
         </div>
