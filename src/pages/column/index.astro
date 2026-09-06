@@ -60,7 +60,7 @@ const posts = sorted.map(e => ({
     .card:hover { background: #fafafa; }
     .accent-bar { width: 3px; flex-shrink: 0; }
     .card-inner { padding: 14px 20px; flex: 1; }
-    .card-num { font-size: 11px; color: #aaa; margin-bottom: 2px; }
+  　・card-num { font-size: 11px; color: #1a1a1a; margin-bottom: 2px; }
     .card-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; line-height: 1.4; }
     .card-desc { font-size: 12px; color: #666; line-height: 1.6; font-family: 'Noto Serif JP', serif; }
     .no-results { max-width: 860px; margin: 40px auto; padding: 0 24px; font-size: 13px; color: #aaa; text-align: center; display: none; }
@@ -122,7 +122,7 @@ const posts = sorted.map(e => ({
       <a href={`/column/${p.id}`} class="card" data-genre={p.genre} data-era={p.era} data-region={p.region} data-search={p.title + ' ' + p.author + ' ' + p.keywords + ' ' + p.description}>
         <div class="accent-bar" style={`background:${p.color};`}></div>
         <div class="card-inner">
-          <div class="card-num">|{p.num}|　{p.genre}</div>
+          <div class="card-num">{p.num}　{p.genre}</div>
           <div class="card-title">{p.title}（{p.yearLabel}）</div>
           <div class="card-desc">{p.description}</div>
         </div>
