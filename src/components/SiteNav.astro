@@ -1,0 +1,57 @@
+---
+/**
+ * SiteNav — サイト共通のナビゲーションバー
+ *
+ * 使い方:
+ *   <SiteNav backLabel="← コラム一覧" backHref="/column" />
+ *   <SiteNav />  ← デフォルトは「← トップへ戻る」
+ */
+interface Props {
+  backLabel?: string;
+  backHref?: string;
+  maxWidth?: string;
+}
+const {
+  backLabel = '← トップへ戻る',
+  backHref = '/',
+  maxWidth = '680px',
+} = Astro.props;
+---
+
+<nav class="site-nav" style={`max-width: ${maxWidth};`}>
+  <a href="/" class="site-logo">山王晶</a>
+  <a href={backHref}>{backLabel}</a>
+</nav>
+
+<style>
+  .site-nav {
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.5px solid #ddd;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .site-nav a {
+    font-size: 12px;
+    color: #888;
+    text-decoration: none;
+  }
+  .site-nav a:hover {
+    color: #1a1a1a;
+  }
+  .site-logo {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a !important;
+    text-decoration: none;
+  }
+
+  @media (max-width: 640px) {
+    .site-nav {
+      padding: 12px 16px;
+    }
+  }
+</style>
