@@ -141,13 +141,42 @@ const posts = sorted.map(e => ({
   let currentPage = 1;
   let filteredCards: Element[] = [];
 
+  // Pagefindは非同期（結果が返ってくるまで少し時間がかかる）なので、
+  // 一度読み込んだら使い回せるように、外側の変数に保持しておく
+  let pagefind: any = null;
+  let searchMatchedIds: Set<string> | null = null; // nullは「検索していない」を表す
+
+  async function ensurePagefind() {
+    if (!pagefind) {
+      // @ts-ignore  ビルド後にだけ実在するファイルなので、型チェックの対象外にする
+      pagefind = await import(/* @vite-ignore */ '/pagefind/pagefind.js');
+      await pagefind.init();
+    }
+    return pagefind;
+  }
+
+  async function runSearch(query: string) {
+    if (!query) {
+      searchMatchedIds = null; // 検索窓が空なら「絞り込みなし」の状態に戻す
+      applyFilter();
+      return;
+    }
+    const pf = await ensurePagefind();
+    const search = await pf.search(query);
+    const results = await Promise.all(search.results.map((r: any) => r.data()));
+    // 各記事のURL（例: /column/0008/）から、カードのdata-idと突き合わせられる形に変換
+    searchMatchedIds = new Set(results.map((r: any) => r.url));
+    applyFilter();
+  }
+
   function applyFilter() {
     filteredCards = cards.filter(card => {
       const el = card as HTMLElement;
       const matchGenre = activeGenre === 'すべて' || el.dataset.genre === activeGenre;
       const matchEra = activeEra === 'すべて' || el.dataset.era === activeEra;
       const matchRegion = activeRegion === 'すべて' || el.dataset.region === activeRegion;
-      const matchSearch = searchQuery === '' || (el.dataset.search ?? '').toLowerCase().includes(searchQuery.toLowerCase());
+      // 検索していない(null)ならスルー、検索中なら「Pagefindがヒットと言ったURLか」で判定
+      const matchSearch = searchMatchedIds === null || searchMatchedIds.has((el as HTMLAnchorElement).pathname);
       return matchGenre && matchEra && matchRegion && matchSearch;
     });
     currentPage = 1;
@@ -190,11 +219,15 @@ const posts = sorted.map(e => ({
   setupBtns('era-btns', 'era', v => activeEra = v);
   setupBtns('region-btns', 'region', v => activeRegion = v);
 
+  // 検索窓の入力は、1文字打つたびに走らせるとPagefindへの問い合わせが多すぎるので、
+  // 入力が止まってから少し待って(300ミリ秒)実行する「デバウンス」という工夫をしている
+  let debounceTimer: ReturnType<typeof setTimeout>;
   const searchInput = document.getElementById('search-input') as HTMLInputElement | null;
   if (searchInput) {
     searchInput.addEventListener('input', () => {
       searchQuery = searchInput.value;
-      applyFilter();
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => runSearch(searchQuery), 300);
     });
   }
 
@@ -203,6 +236,7 @@ const posts = sorted.map(e => ({
     searchClear.addEventListener('click', () => {
       searchInput.value = '';
       searchQuery = '';
+      searchMatchedIds = null;
       applyFilter();
     });
   }

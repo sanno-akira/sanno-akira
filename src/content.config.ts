@@ -15,6 +15,7 @@ const column = defineCollection({
     yearSort:    z.number(),
     yearLabel:   z.string(),
     keywords:    z.array(z.string()).default([]),
+    subjects:    z.array(z.string()).default([]),   // ← 追加
     date:        z.string(),
     description: z.string(),
     image:       z.string().optional(),
@@ -30,12 +31,15 @@ const least = defineCollection({
   schema: z.object({
     num:         z.string(),
     title:       z.string(),
+    lang:        z.enum(['ja', 'en']).default('ja'),   // ← 追加
+    yearSort:    z.number(),                             // ← 追加
+    yearLabel:   z.string().optional(),                  // ← 追加
     date:        z.string(),
     description: z.string(),
     refs: z.array(z.object({
       text: z.string(),
       url:  z.string().optional(),
-      note: z.string().optional(),  // ← 追加
+      note: z.string().optional(),
     })).default([]),
   }),
 });

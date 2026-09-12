@@ -29,7 +29,10 @@ const next = sorted[currentIndex + 1];
     <div class="article-meta">
       <div class="article-num">No.{article.num}</div>
       <h1 class="article-title">{article.title}</h1>
-      <div class="article-date">{article.date}</div>
+      <div class="article-meta-bottom">
+        <span>{article.date}</span>
+        {article.yearLabel && <span>{article.yearLabel}</span>}
+      </div>
     </div>
 
     <div class="body">
@@ -74,7 +77,13 @@ const next = sorted[currentIndex + 1];
   }
   .article-num { font-size: 11px; color: #aaa; margin-bottom: 8px; }
   .article-title { font-size: 24px; font-weight: 700; line-height: 1.4; margin-bottom: 8px; }
-  .article-date { font-size: 11px; color: #aaa; }
+  .article-meta-bottom {
+    display: flex;
+    gap: 16px;
+    font-size: 11px;
+    color: #aaa;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
   .body { font-size: 17px; line-height: 2; font-family: 'Noto Serif JP', serif; }
   .body :global(p) { margin-bottom: 1.6rem; text-align: justify; text-justify: inter-character; }
   .body :global(strong) { font-weight: 700; font-family: 'Noto Sans JP', sans-serif; }

@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import { GENRE_COLOR } from '../../lib/genreConfig';
+import { entities } from '../../lib/entities'; 
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteNav from '../../components/SiteNav.astro';
 import YouTube from '../../components/YouTube.astro';
@@ -17,6 +18,10 @@ const { entry } = Astro.props;
 const { Content } = await render(entry, { components: { YouTube } });
 const article = entry.data;
 const genreColor = GENRE_COLOR[article.genre] ?? '#888888';
+
+const hiddenAliases = (article.subjects ?? [])
+  .flatMap((id) => entities[id]?.aliases ?? [])
+  .join(' ');
 
 const allEntries = await getCollection('column');
 const sorted = allEntries.sort((a, b) => a.data.num.localeCompare(b.data.num));
@@ -46,6 +51,8 @@ const next = sorted[currentIndex + 1];
     <div class="body">
       <Content />
     </div>
+
+    {hiddenAliases && <span class="visually-hidden">{hiddenAliases}</span>}
 
     {article.keywords && article.keywords.length > 0 && (
       <div class="keywords">
@@ -87,6 +94,14 @@ const next = sorted[currentIndex + 1];
 </BaseLayout>
 
 <style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
   .article {
     max-width: 680px;
     margin: 0 auto;
