@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import { GENRE_COLOR } from '../../lib/genreConfig';
 import { REGION_MAP } from '../../lib/regionMap';
+import { entities } from '../../lib/entities';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteNav from '../../components/SiteNav.astro';
 
@@ -13,20 +14,35 @@ const eras = ['すべて', '古代', '中世', '近世', '近代', '現代'];
 const regionSet = new Set(sorted.map(e => REGION_MAP[e.data.country] ?? 'その他'));
 const regions = ['すべて', ...Array.from(regionSet)].sort();
 
-const posts = sorted.map(e => ({
-  id: e.id,
-  num: e.data.num,
-  title: e.data.title,
-  author: e.data.author,
-  genre: e.data.genre,
-  era: e.data.era,
-  country: e.data.country,
-  region: REGION_MAP[e.data.country] ?? 'その他',
-  yearLabel: e.data.yearLabel,
-  description: e.data.description,
-  keywords: (e.data.keywords ?? []).join(' '),
-  color: GENRE_COLOR[e.data.genre] ?? '#888',
-}));
+const posts = sorted.map(e => {
+  const aliases = (e.data.subjects ?? [])
+    .flatMap((id: string) => {
+      const entity = entities[id as keyof typeof entities];
+      return entity ? entity.aliases : [];
+    })
+    .join(' ');
+  return {
+    id: e.id,
+    num: e.data.num,
+    title: e.data.title,
+    author: e.data.author,
+    genre: e.data.genre,
+    era: e.data.era,
+    country: e.data.country,
+    region: REGION_MAP[e.data.country] ?? 'その他',
+    yearLabel: e.data.yearLabel,
+    description: e.data.description,
+    color: GENRE_COLOR[e.data.genre] ?? '#888',
+    searchText: [
+      e.data.title,
+      e.data.author,
+      (e.data.keywords ?? []).join(' '),
+      e.data.description,
+      (e.data.subjects ?? []).join(' '),
+      aliases,
+    ].join(' '),
+  };
+});
 ---
 
 <BaseLayout title="My 1000 Favorite Things | 山王晶">
@@ -36,6 +52,7 @@ const posts = sorted.map(e => ({
     <div class="page-title">My 1000 Favorite Things</div>
     <div class="page-desc">私が好きなヒト・コト・モノについての1000のコラム。</div>
   </div>
+
   <div class="filter-section">
     <div class="filter-row">
       <span class="filter-label">ジャンル</span>
@@ -69,11 +86,20 @@ const posts = sorted.map(e => ({
       </div>
     </div>
   </div>
+
   <div class="result-info" id="result-info">全{posts.length}件</div>
+
   <div class="card-list" id="card-list">
     {posts.map(p => (
-      <a href={`/column/${p.id}`} class="card" data-genre={p.genre} data-era={p.era} data-region={p.region} data-search={p.title + ' ' + p.author + ' ' + p.keywords + ' ' + p.description}>
-        <div class="accent-bar" style={`background:${p.color};`}></div>
+   <a   
+        href={'/column/' + p.id}
+        class="card"
+        data-genre={p.genre}
+        data-era={p.era}
+        data-region={p.region}
+        data-search={p.searchText}
+      >
+        <div class="accent-bar" style={'background:' + p.color + ';'}></div>
         <div class="card-inner">
           <div class="card-num">{p.num}　{p.genre}</div>
           <div class="card-title">{p.title}（{p.yearLabel}）</div>
@@ -82,7 +108,9 @@ const posts = sorted.map(e => ({
       </a>
     ))}
   </div>
+
   <div class="no-results" id="no-results">該当する記事が見つかりませんでした。</div>
+
   <div class="pagination" id="pagination">
     <button class="pagination-btn" id="prev-btn">← 前のページ</button>
     <span class="pagination-info" id="pagination-info"></span>
@@ -121,88 +149,75 @@ const posts = sorted.map(e => ({
   .pagination-info { font-size: 11px; color: #aaa; }
 
   @media (max-width: 640px) {
-    .page-header, .filter-section, .result-info, .card-list, .no-results, .pagination { padding-left: 16px; padding-right: 16px; }
+    .page-header,
+    .filter-section,
+    .result-info,
+    .card-list,
+    .no-results,
+    .pagination { padding-left: 16px; padding-right: 16px; }
   }
 </style>
 
 <script>
   const PER_PAGE = 10;
-  const cards = Array.from(document.querySelectorAll('.card'));
-  const resultInfo = document.getElementById('result-info');
-  const noResults = document.getElementById('no-results');
-  const prevBtn = document.getElementById('prev-btn') as HTMLButtonElement;
-  const nextBtn = document.getElementById('next-btn') as HTMLButtonElement;
-  const paginationInfo = document.getElementById('pagination-info');
+  const cards = Array.from(document.querySelectorAll('.card')) as HTMLElement[];
+  const resultInfo     = document.getElementById('result-info') as HTMLElement;
+  const noResults      = document.getElementById('no-results') as HTMLElement;
+  const prevBtn        = document.getElementById('prev-btn') as HTMLButtonElement;
+  const nextBtn        = document.getElementById('next-btn') as HTMLButtonElement;
+  const paginationInfo = document.getElementById('pagination-info') as HTMLElement;
+  const searchInput    = document.getElementById('search-input') as HTMLInputElement;
 
-  let activeGenre = 'すべて';
-  let activeEra = 'すべて';
+  let activeGenre  = 'すべて';
+  let activeEra    = 'すべて';
   let activeRegion = 'すべて';
-  let searchQuery = '';
-  let currentPage = 1;
-  let filteredCards: Element[] = [];
+  let currentPage  = 1;
+  let filteredCards: HTMLElement[] = [];
 
-  // Pagefindは非同期（結果が返ってくるまで少し時間がかかる）なので、
-  // 一度読み込んだら使い回せるように、外側の変数に保持しておく
-  let pagefind: any = null;
-  let searchMatchedIds: Set<string> | null = null; // nullは「検索していない」を表す
-
-  async function ensurePagefind() {
-    if (!pagefind) {
-      // @ts-ignore  ビルド後にだけ実在するファイルなので、型チェックの対象外にする
-      pagefind = await import(/* @vite-ignore */ '/pagefind/pagefind.js');
-      await pagefind.init();
-    }
-    return pagefind;
-  }
-
-  async function runSearch(query: string) {
-    if (!query) {
-      searchMatchedIds = null; // 検索窓が空なら「絞り込みなし」の状態に戻す
-      applyFilter();
-      return;
-    }
-    const pf = await ensurePagefind();
-    const search = await pf.search(query);
-    const results = await Promise.all(search.results.map((r: any) => r.data()));
-    // 各記事のURL（例: /column/0008/）から、カードのdata-idと突き合わせられる形に変換
-    searchMatchedIds = new Set(results.map((r: any) => r.url));
-    applyFilter();
+  function normalize(str: string): string {
+    return str
+      .toLowerCase()
+      .replace(/[Ａ-Ｚａ-ｚ０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0))
+      .replace(/[\u3000\s]+/g, ' ')
+      .trim();
   }
 
   function applyFilter() {
+    const query = normalize(searchInput.value);
+    const terms = query.split(' ').filter(Boolean);
+
     filteredCards = cards.filter(card => {
-      const el = card as HTMLElement;
-      const matchGenre = activeGenre === 'すべて' || el.dataset.genre === activeGenre;
-      const matchEra = activeEra === 'すべて' || el.dataset.era === activeEra;
-      const matchRegion = activeRegion === 'すべて' || el.dataset.region === activeRegion;
-      // 検索していない(null)ならスルー、検索中なら「Pagefindがヒットと言ったURLか」で判定
-      const matchSearch = searchMatchedIds === null || searchMatchedIds.has((el as HTMLAnchorElement).pathname);
+      const matchGenre  = activeGenre  === 'すべて' || card.dataset.genre  === activeGenre;
+      const matchEra    = activeEra    === 'すべて' || card.dataset.era    === activeEra;
+      const matchRegion = activeRegion === 'すべて' || card.dataset.region === activeRegion;
+      const haystack    = normalize(card.dataset.search ?? '');
+      const matchSearch = terms.every(t => haystack.includes(t));
       return matchGenre && matchEra && matchRegion && matchSearch;
     });
+
     currentPage = 1;
     renderPage();
   }
 
   function renderPage() {
-    const total = filteredCards.length;
+    const total      = filteredCards.length;
     const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
     if (currentPage > totalPages) currentPage = totalPages;
     const start = (currentPage - 1) * PER_PAGE;
-    const end = start + PER_PAGE;
 
-    cards.forEach(card => (card as HTMLElement).style.display = 'none');
-    filteredCards.slice(start, end).forEach(card => (card as HTMLElement).style.display = 'flex');
+    cards.forEach(c => { c.style.display = 'none'; });
+    filteredCards.slice(start, start + PER_PAGE).forEach(c => { c.style.display = 'flex'; });
 
-    if (resultInfo) resultInfo.textContent = total + '件';
-    if (noResults) (noResults as HTMLElement).style.display = total === 0 ? 'block' : 'none';
-    if (paginationInfo) paginationInfo.textContent = total > 0 ? currentPage + ' / ' + totalPages + ' ページ' : '';
-    if (prevBtn) prevBtn.disabled = currentPage <= 1;
-    if (nextBtn) nextBtn.disabled = currentPage >= totalPages;
+    resultInfo.textContent     = total + '件';
+    noResults.style.display    = total === 0 ? 'block' : 'none';
+    paginationInfo.textContent = total > 0 ? currentPage + ' / ' + totalPages + ' ページ' : '';
+    prevBtn.disabled = currentPage <= 1;
+    nextBtn.disabled = currentPage >= totalPages;
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function setupBtns(containerId: string, key: string, setter: (v: string) => void) {
+  function setupBtns(containerId: string, setter: (v: string) => void) {
     const container = document.getElementById(containerId);
     if (!container) return;
     container.addEventListener('click', e => {
@@ -210,43 +225,35 @@ const posts = sorted.map(e => ({
       if (!btn) return;
       container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      setter(btn.dataset[key] ?? 'すべて');
+      const val = btn.dataset.genre ?? btn.dataset.era ?? btn.dataset.region ?? 'すべて';
+      setter(val);
       applyFilter();
     });
   }
 
-  setupBtns('genre-btns', 'genre', v => activeGenre = v);
-  setupBtns('era-btns', 'era', v => activeEra = v);
-  setupBtns('region-btns', 'region', v => activeRegion = v);
+  setupBtns('genre-btns',  v => { activeGenre  = v; });
+  setupBtns('era-btns',    v => { activeEra    = v; });
+  setupBtns('region-btns', v => { activeRegion = v; });
 
-  // 検索窓の入力は、1文字打つたびに走らせるとPagefindへの問い合わせが多すぎるので、
-  // 入力が止まってから少し待って(300ミリ秒)実行する「デバウンス」という工夫をしている
   let debounceTimer: ReturnType<typeof setTimeout>;
-  const searchInput = document.getElementById('search-input') as HTMLInputElement | null;
-  if (searchInput) {
-    searchInput.addEventListener('input', () => {
-      searchQuery = searchInput.value;
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => runSearch(searchQuery), 300);
-    });
-  }
+  searchInput.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(applyFilter, 200);
+  });
 
-  const searchClear = document.getElementById('search-clear');
-  if (searchClear && searchInput) {
-    searchClear.addEventListener('click', () => {
+  const clearBtn = document.getElementById('search-clear');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
       searchInput.value = '';
-      searchQuery = '';
-      searchMatchedIds = null;
       applyFilter();
     });
   }
 
-  if (prevBtn) prevBtn.addEventListener('click', () => {
+  prevBtn.addEventListener('click', () => {
     if (currentPage > 1) { currentPage--; renderPage(); }
   });
-  if (nextBtn) nextBtn.addEventListener('click', () => {
-    const totalPages = Math.ceil(filteredCards.length / PER_PAGE);
-    if (currentPage < totalPages) { currentPage++; renderPage(); }
+  nextBtn.addEventListener('click', () => {
+    if (currentPage < Math.ceil(filteredCards.length / PER_PAGE)) { currentPage++; renderPage(); }
   });
 
   applyFilter();

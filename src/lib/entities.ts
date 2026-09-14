@@ -25,6 +25,11 @@ export const entities = {
     aliases: ["鮭"],
     slug: null, // 0001の中の一部分なので、単独記事にはリンクしない
   },
+  "tofu-takahashi": {
+    canonical: "豆腐（髙橋由一）",
+    aliases: ["豆腐"],
+    slug: null, // 0001の中の一部分なので、単独記事にはリンクしない
+  },
 
   // ── 0002 ──
   "thutmose": {
@@ -339,6 +344,33 @@ export const entities = {
     slug: null,
   },
 
+  // ── 0011（デヴィッド・マンロウ）──
+  "david-munrow": {
+    canonical: "デヴィッド・マンロウ",
+    aliases: ["デヴィッド・マンロウ", "マンロウ", "David Munrow"],
+    slug: "0011",
+  },
+  "pentangle": {
+    canonical: "ペンタングル",
+    aliases: ["ペンタングル", "Pentangle"],
+    slug: null,
+  },
+  "fairport-convention": {
+    canonical: "フェアポート・コンヴェンション",
+    aliases: ["フェアポート・コンヴェンション", "Fairport Convention"],
+    slug: null,
+  },
+  "steeleye-span": {
+    canonical: "スティーライ・スパン",
+    aliases: ["スティーライ・スパン", "Steeleye Span"],
+    slug: null,
+  },
+  "yoshida-hidekazu": {
+    canonical: "吉田秀和",
+    aliases: ["吉田秀和"],
+    slug: null,
+  },
+
   // ── 0012（折口信夫）──
   // 「死者の書」は0002（古代エジプトの文書）と同名なので、別エントリとして分離。
   "orikuchi-shinobu": {
@@ -348,9 +380,37 @@ export const entities = {
   },
   "shisha-no-sho-orikuchi": {
     canonical: "死者の書（折口信夫）",
-    aliases: ["死者の書"], // book-of-the-dead-egypt と同じ語だが、指すものは別
+    aliases: ["死者の書"],
+    slug: "0012",
+  },
+    "otsu-no-miko": {
+    canonical: "大津皇子",
+    aliases: ["大津皇子"],
+    slug: "0012",
+  },
+  "nakazawa-shinichi": {
+    canonical: "中沢新一",
+    aliases: ["中沢新一"],
+    slug: "0012",
+  },
+  "yoshimoto-takaaki": {
+    canonical: "吉本隆明",
+    aliases: ["吉本隆明"],
+    slug: "0012",
+  },
+    "kobayashi-hideo": {
+    canonical: "小林秀雄",
+    aliases: ["小林秀雄"],
+    slug: "0012",
+  },
+    "hasumi-shigehiko": {
+    canonical: "蓮實重彦",
+    aliases: ["蓮實重彦"],
+    slug: "0012",
+  },
+    "kawamoto-kihachiro": {
+    canonical: "川本喜八郎",
+    aliases: ["川本喜八郎"],
     slug: "0012",
   },
 } as const;
-
-export type EntityId = keyof typeof entities;
