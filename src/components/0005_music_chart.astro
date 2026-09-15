@@ -1,0 +1,185 @@
+0005_music_chart · ASTRO
+---
+/**
+ * Music_chart.astro
+ * アメリカ大陸の音楽──地域ごとの文化混交比率（積み上げ横棒グラフ）
+ *
+ * 使い方: <Music_chart /> をページや .mdx 記事に配置するだけ。
+ * props なし・外部依存なし。
+ */
+ 
+interface Region {
+  name: string;
+  europe: number;   // %
+  africa: number;
+  native: number;
+  euroLabel: string;
+}
+ 
+const regions: Region[] = [
+  { name: "北米",         europe: 50, africa: 40, native: 10, euroLabel: "英・仏" },
+  { name: "カリブ海",     europe: 30, africa: 60, native: 10, euroLabel: "西・仏" },
+  { name: "メソアメリカ", europe: 40, africa: 20, native: 40, euroLabel: "スペイン" },
+  { name: "アンデス",     europe: 25, africa:  5, native: 70, euroLabel: "スペイン" },
+  { name: "ブラジル",     europe: 35, africa: 55, native: 10, euroLabel: "ポルトガル" },
+  { name: "ラプラタ",     europe: 75, africa: 10, native: 15, euroLabel: "伊・西" },
+];
+---
+ 
+<figure class="mix-chart" role="img" aria-label="アメリカ大陸の音楽──地域ごとの文化混交比率">
+  <figcaption class="mix-chart__title">地域ごとの文化混交比率（概念図）</figcaption>
+ 
+  <div class="mix-chart__legend">
+    <span class="mix-chart__legend-item mix-chart__legend-item--europe">ヨーロッパ</span>
+    <span class="mix-chart__legend-item mix-chart__legend-item--africa">アフリカ</span>
+    <span class="mix-chart__legend-item mix-chart__legend-item--native">先住民</span>
+  </div>
+ 
+  <div class="mix-chart__body">
+    {regions.map((r) => (
+      <div class="mix-chart__row">
+        <span class="mix-chart__label">
+          {r.name}
+          <span class="mix-chart__sublabel">{r.euroLabel}</span>
+        </span>
+        <div class="mix-chart__bar">
+          {r.europe > 0 && (
+            <div
+              class="mix-chart__segment mix-chart__segment--europe"
+              style={`width:${r.europe}%`}
+              title={`ヨーロッパ ${r.europe}%`}
+            >
+              {r.europe >= 15 && <span>{r.europe}%</span>}
+            </div>
+          )}
+          {r.africa > 0 && (
+            <div
+              class="mix-chart__segment mix-chart__segment--africa"
+              style={`width:${r.africa}%`}
+              title={`アフリカ ${r.africa}%`}
+            >
+              {r.africa >= 15 && <span>{r.africa}%</span>}
+            </div>
+          )}
+          {r.native > 0 && (
+            <div
+              class="mix-chart__segment mix-chart__segment--native"
+              style={`width:${r.native}%`}
+              title={`先住民 ${r.native}%`}
+            >
+              {r.native >= 15 && <span>{r.native}%</span>}
+            </div>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+ 
+  <p class="mix-chart__note">
+    ※ 数値は厳密な統計ではなく、個人の主観を多分に含んでいます。
+  </p>
+</figure>
+ 
+<style>
+  .mix-chart {
+   --color-europe: #5B8DB8;
+   --color-africa: #B87355;
+   --color-native: #7B9E6B;
+    max-width: 640px;
+    margin: 2rem auto;
+    font-family: "Helvetica Neue", "Hiragino Sans", sans-serif;
+    color: #333;
+  }
+ 
+  .mix-chart__title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+ 
+  /* ── 凡例 ── */
+  .mix-chart__legend {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+    font-size: 0.82rem;
+  }
+  .mix-chart__legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .mix-chart__legend-item::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+  }
+  .mix-chart__legend-item--europe::before { background: var(--color-europe); }
+  .mix-chart__legend-item--africa::before { background: var(--color-africa); }
+  .mix-chart__legend-item--native::before { background: var(--color-native); }
+ 
+  /* ── 本体 ── */
+  .mix-chart__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .mix-chart__row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .mix-chart__label {
+    flex: 0 0 7rem;
+    text-align: right;
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .mix-chart__sublabel {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: #888;
+  }
+ 
+  /* ── バー ── */
+  .mix-chart__bar {
+    flex: 1;
+    display: flex;
+    height: 28px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .mix-chart__segment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: width 0.4s ease;
+  }
+  .mix-chart__segment--europe { background: var(--color-europe); }
+  .mix-chart__segment--africa { background: var(--color-africa); }
+  .mix-chart__segment--native { background: var(--color-native); }
+ 
+  .mix-chart__note {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: #999;
+    text-align: center;
+  }
+ 
+  /* ── ダークモード ── */
+  @media (prefers-color-scheme: dark) {
+    .mix-chart { color: #e0e0e0; }
+    .mix-chart__sublabel { color: #aaa; }
+    .mix-chart__note { color: #777; }
+  }
+</style>
