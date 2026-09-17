@@ -8,9 +8,10 @@ country: "日本"
 era: "近代"
 yearSort: 1877
 yearLabel: "1877年頃"
-keywords: ["洋画", "明治", "写実主義", "静物画", "油彩"]
+subjects: ["takahashi-yuich", "matthew-perry", "sake-takahashi", "tofu-takahashi"]
+keywords: ["洋画", "明治", "江戸時代", "脂派"]
 date: "2026.08.30"
-description: "これが日本の洋画の夜明け。私に多くの気づきを与えてくれた誰もが知る名画。"
+description: "これが日本の洋画の夜明け。私に多くの気づきを与えてくれた、誰もが知る名画。"
 refs:
   - text: "日本アートセンター編『高橋由一』（新潮日本美術文庫、1998）"
     url: "https://www.amazon.co.jp/dp/4106015439/"
@@ -21,14 +22,15 @@ refs:
 ---
 
 import { Image } from 'astro:assets';
+import BigText from '../../components/BigText.astro';
 import salmon from '../../assets/column/0001/0001_1_salmon.jpg';
 import tofu from '../../assets/column/0001/0001_2_Tofu.jpg';
 
 まず最初に、私が大きな影響を受けた一枚の絵についてお話したいと思います。高橋由一（1828–1894）の『鮭』です。
 
-<figure style="margin: 2rem 0;">
-<Image src={salmon} alt="高橋由一『鮭』" width={720} style="display:block; margin: 0 auto; width:100%; height:auto;" />
-  <figcaption style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">高橋由一『鮭』（1875–1879年頃）東京芸術大学大学美術館（Public Domain, Photo：Wikimedia Commons）</figcaption>
+<figure>
+<Image src={salmon} alt="高橋由一『鮭』" width={600} />
+  <figcaption>高橋由一『鮭』（1875–1879年頃）東京芸術大学大学美術館（Public Domain, Photo：Wikimedia Commons）</figcaption>
 </figure>
 
 日本人なら一度は目にしたことがある作品ではないでしょうか？　私がはじめて見たのは、たしか中学日本史の参考資料集だったと思います。その時の印象は、いいも悪いも、好きも嫌いもなく、「たしかに鮭だ」という以上の感想が浮かびませんでした。
@@ -37,14 +39,14 @@ import tofu from '../../assets/column/0001/0001_2_Tofu.jpg';
 
 そして、私はさらに決定的な由一の作品と出会います。
 
-<figure style="margin: 2rem 0;">
-<Image src={tofu} alt="高橋由一『豆腐』" width={720} style="display:block; margin: 0 auto; width:100%; height:auto;" />
-  <figcaption style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">高橋由一『豆腐』（1877）金刀比羅宮、琴平町（Public Domain, Photo：Wikimedia Commons）</figcaption>
+<figure >
+<Image src={tofu} alt="高橋由一『豆腐』" width={720} />
+  <figcaption>高橋由一『豆腐』（1877）金刀比羅宮、琴平町（Public Domain, Photo：Wikimedia Commons）</figcaption>
 </figure>
 
 木綿豆腐と焼き豆腐、そして油揚げ。『鮭』を見た時以上に、私は激しく動揺しました。
 
-<p style="font-size: 28px; font-weight: 700; font-family: 'Noto Sans JP', sans-serif; margin: 2rem 0;">「なんで描いたの?」</p>
+<BigText>「なんで描いたの?」</BigText>
 
 驚いたのはひとえに私の無知ゆえで、創作の動機はとうに解明されています。幼少期から画才に恵まれていた由一は、ペリー来航のころに西洋の石版画と出会い、洋画の精巧な写実技法を一生かけてものにしようと決意しました。そして自分が受けた衝撃と感激を世の人に共感してもらうにはどうしたらいいか、思案した末、誰もがよく知っている食べ物なら迫真が伝わるのではないかと考えたのです。かくして『鮭』と『豆腐』が世に問われ、そのほか『鯛図』『なまり節』など、食べ物シリーズがいくつも描かれました。
 

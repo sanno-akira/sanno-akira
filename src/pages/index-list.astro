@@ -1,0 +1,360 @@
+---
+/**
+ * 索引ページ — /column/index-list
+ *
+ * entities.ts のデータを人名・グループ名と作品名に分類し、
+ * 五十音順で一覧表示する。
+ *
+ * - entities.ts の slug → 主記事（黒リンク）
+ * - frontmatter.subjects からの自動収集 → 言及（グレーリンク）
+ *
+ * 設置場所: src/pages/column/index-list.astro
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteNav from '../../components/SiteNav.astro';
+import { entities } from '../../lib/entities';
+
+// ── 全記事から subjects を逆引き ──
+const allEntries = await getCollection('column');
+
+const mentionMap = new Map<string, { num: string; title: string; slug: string; isPrimary: boolean }[]>();
+
+for (const entry of allEntries) {
+  const subjects: string[] = (entry.data as any).subjects ?? [];
+  for (const subjectId of subjects) {
+    if (!mentionMap.has(subjectId)) mentionMap.set(subjectId, []);
+    const list = mentionMap.get(subjectId)!;
+    const entitySlug = (entities as Record<string, any>)[subjectId]?.slug;
+    const isPrimary = entitySlug === entry.id;
+    if (!list.some(m => m.slug === entry.id)) {
+      list.push({
+        num: (entry.data as any).num,
+        title: (entry.data as any).title,
+        slug: entry.id,
+        isPrimary,
+      });
+    }
+  }
+}
+
+// entities.ts の slug が subjects に書き忘れられていても主記事リンクを確保
+for (const [id, e] of Object.entries(entities)) {
+  if (e.slug) {
+    if (!mentionMap.has(id)) mentionMap.set(id, []);
+    const list = mentionMap.get(id)!;
+    if (!list.some(m => m.slug === e.slug)) {
+      const matchEntry = allEntries.find(en => en.id === e.slug);
+      if (matchEntry) {
+        list.push({
+          num: (matchEntry.data as any).num,
+          title: (matchEntry.data as any).title,
+          slug: matchEntry.id,
+          isPrimary: true,
+        });
+      }
+    }
+  }
+}
+
+// 主記事を先頭にし、残りは記事番号順
+for (const [, list] of mentionMap) {
+  list.sort((a, b) => {
+    if (a.isPrimary !== b.isPrimary) return a.isPrimary ? -1 : 1;
+    return a.num.localeCompare(b.num);
+  });
+}
+
+// ── カテゴリ分類（2タブ: person / work） ──
+type Category = 'person' | 'work';
+const CATEGORY_LABELS: Record<Category, string> = {
+  person: '人名・グループ名',
+  work: '作品名',
+};
+const CATEGORY_ORDER: Category[] = ['person', 'work'];
+
+type EntryItem = {
+  id: string;
+  canonical: string;
+  category: Category;
+  mentions: { num: string; title: string; slug: string; isPrimary: boolean }[];
+};
+
+const items: EntryItem[] = Object.entries(entities)
+  .filter(([, e]) => {
+    const cat = (e as any).category;
+    return cat === 'person' || cat === 'work';
+  })
+  .map(([id, e]) => ({
+    id,
+    canonical: e.canonical,
+    category: (e as any).category as Category,
+    mentions: mentionMap.get(id) ?? [],
+  }));
+
+const grouped: Record<Category, EntryItem[]> = {
+  person: [],
+  work: [],
+};
+for (const item of items) {
+  grouped[item.category].push(item);
+}
+for (const cat of CATEGORY_ORDER) {
+  grouped[cat].sort((a, b) => a.canonical.localeCompare(b.canonical, 'ja'));
+}
+
+// 重複する canonical を検出
+const canonicalCount = new Map<string, EntryItem[]>();
+for (const item of items) {
+  const key = item.canonical;
+  if (!canonicalCount.has(key)) canonicalCount.set(key, []);
+  canonicalCount.get(key)!.push(item);
+}
+const duplicates = [...canonicalCount.entries()].filter(([, v]) => v.length > 1);
+---
+
+<BaseLayout title="索引 | 山王晶">
+  <SiteNav backLabel="← コラム一覧" backHref="/column" />
+
+  <div class="page">
+    <div class="page-header">
+      <h1 class="page-title">索引</h1>
+      <p class="page-desc">コラムに登場する人名・グループ名、作品名の一覧です。太字は主題記事、細字は言及のある記事です。</p>
+    </div>
+
+    <div class="tab-bar" id="tab-bar">
+      {CATEGORY_ORDER.map((cat, i) => (
+        <button
+          class={i === 0 ? 'tab active' : 'tab'}
+          data-cat={cat}
+        >
+          {CATEGORY_LABELS[cat]}
+          <span class="tab-count">{grouped[cat].length}</span>
+        </button>
+      ))}
+    </div>
+
+    {CATEGORY_ORDER.map((cat, i) => (
+      <div
+        class={i === 0 ? 'index-section active' : 'index-section'}
+        data-cat={cat}
+      >
+        <ul class="index-list">
+          {grouped[cat].map(item => (
+            <li class="index-item">
+              <div class="index-row">
+                <span class={item.mentions.length > 0 ? 'index-name' : 'index-name dimmed'}>
+                  {item.canonical}
+                </span>
+                <span class="index-refs">
+                  {item.mentions.length > 0 ? (
+                    item.mentions.map((m, i) => (
+                      <span>
+                        {i > 0 && <span class="sep">·</span>}
+                        <a
+                          href={`/column/${m.slug}`}
+                          class={m.isPrimary ? 'ref-link primary' : 'ref-link mention'}
+                          title={m.title}
+                        >
+                          {m.num}
+                        </a>
+                      </span>
+                    ))
+                  ) : (
+                    <span class="no-ref">—</span>
+                  )}
+                </span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+
+    {duplicates.length > 0 && (
+      <div class="dup-notice">
+        <p class="dup-title">同名の項目</p>
+        <ul class="dup-list">
+          {duplicates.map(([name, entries]) => (
+            <li>
+              「{name}」→
+              {entries.map((e, i) => (
+                <span>
+                  {i > 0 && '、'}
+                  {e.mentions.length > 0 ? (
+                    e.mentions.map((m, j) => (
+                      <span>
+                        {j > 0 && '・'}
+                        <a href={`/column/${m.slug}`}>{m.num}</a>
+                      </span>
+                    ))
+                  ) : (
+                    <span>（{e.id}）</span>
+                  )}
+                </span>
+              ))}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2.5rem 24px 4rem;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 0.5px solid #ddd;
+  }
+  .page-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .page-desc {
+    font-size: 12px;
+    color: #888;
+  }
+
+  /* タブ */
+  .tab-bar {
+    display: flex;
+    gap: 0;
+    border-bottom: 0.5px solid #ddd;
+    margin-bottom: 1.5rem;
+  }
+  .tab {
+    flex: 1;
+    padding: 10px 0;
+    font-size: 13px;
+    font-family: 'Noto Sans JP', sans-serif;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .tab:hover { color: #1a1a1a; }
+  .tab.active {
+    color: #1a1a1a;
+    border-bottom-color: #1a1a1a;
+  }
+  .tab-count {
+    font-size: 11px;
+    color: #aaa;
+    margin-left: 4px;
+  }
+
+  /* セクション */
+  .index-section { display: none; }
+  .index-section.active { display: block; }
+
+  /* リスト */
+  .index-list {
+    list-style: none;
+    padding: 0;
+  }
+  .index-item {
+    border-bottom: 0.5px solid #eee;
+  }
+  .index-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 8px 0;
+  }
+  .index-name {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #1a1a1a;
+  }
+  .index-name.dimmed {
+    color: #aaa;
+  }
+  .index-refs {
+    font-size: 11px;
+    flex-shrink: 0;
+    margin-left: 16px;
+    white-space: nowrap;
+  }
+  /* 主記事: 黒太字 */
+  .ref-link.primary {
+    color: #1a1a1a;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .ref-link.primary:hover {
+    text-decoration: underline;
+  }
+  /* 言及: グレー */
+  .ref-link.mention {
+    color: #aaa;
+    text-decoration: none;
+  }
+  .ref-link.mention:hover {
+    color: #1a1a1a;
+    text-decoration: underline;
+  }
+  .sep {
+    margin: 0 3px;
+    color: #ccc;
+  }
+  .no-ref {
+    color: #ddd;
+  }
+
+  /* 同名項目 */
+  .dup-notice {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 0.5px solid #ddd;
+  }
+  .dup-title {
+    font-size: 11px;
+    color: #aaa;
+    letter-spacing: .08em;
+    margin-bottom: 8px;
+  }
+  .dup-list {
+    list-style: none;
+    padding: 0;
+  }
+  .dup-list li {
+    font-size: 12px;
+    color: #888;
+    line-height: 2;
+  }
+  .dup-list a {
+    color: #888;
+    text-decoration: underline;
+  }
+  .dup-list a:hover { color: #1a1a1a; }
+
+  @media (max-width: 640px) {
+    .page { padding: 1.5rem 16px 3rem; }
+    .tab { font-size: 12px; }
+  }
+</style>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const sections = document.querySelectorAll('.index-section');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const cat = (tab as HTMLElement).dataset.cat;
+      tabs.forEach(t => t.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`.index-section[data-cat="${cat}"]`)?.classList.add('active');
+    });
+  });
+</script>

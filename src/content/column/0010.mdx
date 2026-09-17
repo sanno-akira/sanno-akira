@@ -21,23 +21,26 @@ refs:
 ---
 
 import { Image } from 'astro:assets';
+import Box from '../../components/Box.astro';
 import YouTube from '../../components/YouTube.astro';
 import Cycladic1 from '../../assets/column/0010/0010_1_Cycladic1.jpg';
 import Cycladic2 from '../../assets/column/0010/0010_2_Cycladic2.jpg';
 import Brancusi from '../../assets/column/0010/0010_3_Brancusi.jpg';
 import Cycladic3 from '../../assets/column/0010/0010_4_Cycladic3.jpg';
 
-<figure style="margin: 2rem 0;">
-<Image src={Cycladic1} alt="キクラデス1" width={720} style="display:block; margin: 0 auto; width:100%; height:auto;" />
-  <figcaption style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">『前期キクラデスII期の群像』バーデン州立博物館、カールスルーエ（写真：Smial / CC BY-SA 2.5）</figcaption>
+<figure>
+<Image src={Cycladic1} alt="キクラデス1" width={720} />
+  <figcaption>『前期キクラデスII期の群像』バーデン州立博物館、カールスルーエ（写真：Smial / CC BY-SA 2.5）</figcaption>
 </figure>
 
 西洋芸術の故郷、それは古代ギリシアです。深層にはケルトという伏流水が、またのちに東方からキリスト教がもたらされますが、彫刻、建築、詩、演劇をはじめとする美の規範はまずギリシアにおいて定められ、いまだ古典として揺るぎない価値を持っています。しかし、エーゲ海周辺では古代ギリシア以前にも、幾多の文明の興亡がありました。
 
->・キクラデス文明（新石器時代〜青銅器時代初期、紀元前3000年頃）<br/>
->・ミノア文明（クレタ文明とも、青銅器時代初期〜後期、紀元前2000年頃）<br/>
->・ミケーネ文明（青銅器時代後期、紀元前1600年頃）<br/>
->・暗黒時代（紀元前1200年頃〜紀元前800年頃）※文字が消滅
+<Box>
+- キクラデス文明（新石器時代〜青銅器時代初期、紀元前3000年頃）
+- ミノア文明（クレタ文明とも、青銅器時代初期〜後期、紀元前2000年頃）
+- ミケーネ文明（青銅器時代後期、紀元前1600年頃）
+- 暗黒時代（紀元前1200年頃〜紀元前800年頃）※文字が消滅
+</Box>
 
 キクラデス文明がふたたび我々の歴史に登場するのは、1898年まで待たねばなりません。この年、ギリシャの先史考古学の父と呼ばれるクリストス・ツンタスが墳墓遺跡を発掘し、島々の名をとって「キクラデス文明」と名付けました。
 
@@ -45,9 +48,9 @@ import Cycladic3 from '../../assets/column/0010/0010_4_Cycladic3.jpg';
 
 しかし20世紀前半になってモダンアートが台頭すると、キクラデス彫刻の抽象美に気づいた欧米の知識人やコレクターの間で爆発的に需要が高まります。それと同時に大規模な墓荒らしが横行し、どの島でどう埋まっていたかの記録がないまま、多くの大理石像が美術市場へ流出してしまいました。こうしてキクラデスは人々に知られながらも、歴史の謎としてはさらに深まることになってしまったのです。
 
-<figure style="margin: 2rem 0;">
-<Image src={Cycladic2} alt="キクラデス2" width={720} style="display:block; margin: 0 auto; width:100%; height:auto;" />
-  <figcaption style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">『キクラデスの女性像』ルーヴル美術館（写真：Nglisse / CC BY-SA 4.0）</figcaption>
+<figure>
+<Image src={Cycladic2} alt="キクラデス2" width={720} />
+  <figcaption>『キクラデスの女性像』ルーヴル美術館（写真：Nglisse / CC BY-SA 4.0）</figcaption>
 </figure>
 
 キクラデス彫刻の多くは20〜30センチ程度の手のひらサイズです（中には1.5メートルほどの像もあります）。おおむね死者の埋葬に供されるのが目的で、小さな兵馬俑のようなものだったのではないかと推測されています。また一説には、生まれた時に作られて生涯お守りとして持ち歩き、死ぬ時に一緒に埋葬されたとも考えられています。
@@ -58,9 +61,9 @@ import Cycladic3 from '../../assets/column/0010/0010_4_Cycladic3.jpg';
 
 とりわけコンスタンティン・ブランクーシは、キクラデス彫刻の滑らかな大理石の質感や卵型の頭部、一本の線で表現された鼻の造形に強く共鳴し、「本質は外見の形ではなく、ものの内側にある」という美学に至ったそうです。
 
-<figure style="margin: 2rem 0;">
-<Image src={Brancusi} alt="ブランクーシ" width={720} style="display:block; margin: 0 auto; width:100%; height:auto;" />
-  <figcaption style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">コンスタンティン・ブランクーシ『ポガニー嬢の肖像』（1912）フィラデルフィア美術館（アーモリー・ショーの絵葉書より、Public Domain）（写真：Jastrow / Wikimedia Commons - Public Domain）</figcaption>
+<figure>
+<Image src={Brancusi} alt="ブランクーシ" width={720} />
+  <figcaption>コンスタンティン・ブランクーシ『ポガニー嬢の肖像』（1912）フィラデルフィア美術館（アーモリー・ショーの絵葉書より、Public Domain）（写真：Jastrow / Wikimedia Commons - Public Domain）</figcaption>
 </figure>
 
 また<a href="/column/0009">アルベルト・ジャコメッティ</a>も、キクラデスの薄く直立する平らな大理石像の様式に強い影響を受けました。彼は「本物に近づけば近づくほど様式化されていく。街で見かける人々に最も似ていると感じる頭部は、写実的なものでなく、エジプトや初期ギリシアの彫刻だ」という言葉を残しています。リアルに似せるのではなく、削ぎ落とした形の中にこそ人間の本質が宿るという彼の思想の根底には、キクラデス美術の抽象美が範としてあったわけです。
@@ -69,17 +72,17 @@ import Cycladic3 from '../../assets/column/0010/0010_4_Cycladic3.jpg';
 
 もうひとつ、彫刻とは別に「キクラデスのフライパン」と呼ばれる奇妙で愛らしい粘土の器もあります。もちろん調理器具ではありません。太陽や船、そして生命の象徴が刻まれた祭具、あるいは水を張って未来を占う「魔法の鏡」だったとも言われています。
 
-<figure style="margin: 2rem 0;">
-<Image src={Cycladic3} alt="キクラデス3" width={720} style="display:block; margin: 0 auto; width:100%; height:auto;" />
-  <figcaption style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">『キクラデスのフライパン』ルーヴル美術館、パリ（写真：Jastrow / Wikimedia Commons - Public Domain）</figcaption>
+<figure>
+<Image src={Cycladic3} alt="キクラデス3" width={720} />
+  <figcaption>『キクラデスのフライパン』ルーヴル美術館、パリ（写真：Jastrow / Wikimedia Commons - Public Domain）</figcaption>
 </figure>
 
 しかし古代人にとって、現在の我々のような芸術の観念はありません。21世紀に入ってケロス島とダスカリオ島の大規模な発掘が行われた結果、意図的にバラバラに破壊されたキクラデス偶像の断片が数千点も発見されました。パズルを合わせても対になる破片が島内から見つからないことから、「どうやら他の島々で儀式として偶像を破壊し、その片割れをわざわざ船でこの聖なる島へ奉納しにきた」という驚くべき宗教的ネットワークの存在が明らかになったそうです。
 
 謎めいた宗教の香りをまとわせながらも、二股の持ち手やポップな渦巻き模様はやはりどこか愛らしい。この造形は、20世紀の陶芸家ハンス・コパー（1920 - 1981）の洗練されたフォルムにも静かに受け継がれています。キクラデスの人々は、死や祈りという重いテーマの中に、現代の私たちをも虜にするみずみずしくチャーミングな美意識を仕込んでいたと思うのです。
 
-<figure style="margin: 2rem 0;">
+<figure>
   <YouTube url="https://www.youtube.com/watch?v=4B0t4Y8C6ys" />
-  <figcaption style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">ハンス・コパー（Hans Coper, 1920 - 1981）の陶芸作品</figcaption>
+  <figcaption>ハンス・コパー（Hans Coper, 1920 - 1981）の陶芸作品</figcaption>
 </figure>
 

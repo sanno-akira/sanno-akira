@@ -8,7 +8,8 @@ country: "エジプト"
 era: "古代"
 yearSort: -1345
 yearLabel: "B.C.1345年頃"
-keywords: ["彫刻", "古代エジプト", "アマルナ美術", "王妃"]
+keywords: ["彫刻", "古代エジプト", "アマルナ美術", "ピラミッド"]
+subjects: ["thutmose", "nefertiti-bust","herodotus", "napoleon-bonaparte", "haniwa", "tbook-of-the-dead-egypt", "medjed"]
 date: "2026.08.30"
 description: "3000年の時を超えて蘇った隻眼の美女。"
 refs:
@@ -21,44 +22,47 @@ refs:
 ---
 
 import { Image } from 'astro:assets';
+import BigText from '../../components/BigText.astro';
+import Box from '../../components/Box.astro';
 import Nefertiti from '../../assets/column/0002/0002_1_Nefertiti.jpg';
 import Haniwa from '../../assets/column/0002/0002_2_Haniwa.jpg';
 import Medjed from '../../assets/column/0002/0002_3_Medjed.jpg';
 
-<figure style="margin: 2rem 0;">
-  <Image src={Nefertiti} alt="伝・トトメス『ネフェルティティの胸像』" width={720} style="display:block; margin: 0 auto; width:100%; height:auto;" />
-  <figcaption style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">伝・トトメス『ネフェルティティの胸像』（紀元前1345年頃）新博物館、ベルリン（Public Domain, Photo：Wikimedia Commons）</figcaption>
+<figure>
+  <Image src={Nefertiti} alt="伝・トトメス『ネフェルティティの胸像』" width={720} />
+  <figcaption >伝・トトメス『ネフェルティティの胸像』（紀元前1345年頃）新博物館、ベルリン
+  （Public Domain, Photo：Wikimedia Commons）</figcaption>
 </figure>
 
-昔々、ヘロドトスがエジプトを旅した時、現地で出会った神官たちから、次のような話を聞いたそうです。「最初の王から数えて341代、およそ11340年もの間、エジプトの体制や王統は変わらず続いてきた」と。それを聞いたヘロドトスは「エジプト人は祖先から受け継いだ慣習（ノモイ）を遵守し、それ以外のものは一切新しく付け加えようとはしない」と、半ば呆れ気味に語っています。真偽のほどはわかりませんが、ヘロドトス自身がなにしろ紀元前5世紀の人ですから、『歴史』をはじめて読んだ時、私は軽く引きました。
+その昔、ヘロドトスがエジプトを旅した時、現地で出会った神官たちから次のような話を聞いたそうです。「最初の王から数えて341代、およそ11,340年ものあいだ我々は変わらず続いてきた」と。それを聞いたヘロドトスは「エジプト人は祖先から受け継いだ慣習をよく守るが、それ以外のものを一切新しくつけ加えようとしない」と、半ば呆れ気味に語っています。真偽のほどはわかりませんが、ヘロドトス自身がなにしろ紀元前5世紀の人ですから、『歴史』をはじめて読んだ時、私は軽く引きました。
 
-「諸君、あの遺跡の頂から40世紀の歴史が諸君を見下ろしている」——。1798年、ピラミッドの戦いでナポレオンが目の前にそびえ立つ古代の王墓を指さしながら、兵士たちを鼓舞したと伝えられる言葉です。18世紀のフランス人にとっても、その悠久の歴史は畏敬の対象だったのでしょう。40世紀という数字が正しいのかよくわかりませんが、「エジプトはとにかく古い」という認識は、おそらくだいぶ前からあったのだろうと思われます。
+「諸君、あの遺跡のいただきから40世紀の歴史が諸君を見下ろしている」——。1798年、ピラミッドの戦いでナポレオンが言ったと伝えられる言葉です。これも真偽がわからない（後世が盛った）らしいですが、古代エジプトへの畏敬の念がなければ生まれない逸話ではありましょう。40世紀という数字が正しいのかよくわかりませんが、「エジプトはとにかく古い」という認識は、おそらくだいぶ前からあったのだろうと思われます。
 
 実際、伝・トトメス作の『ネフェルティティの胸像』を見ると、古代エジプトがいかに早熟だったか、痛感せずにはいられません。制作年代は紀元前1345年ごろ、アクエンアテン（アメンホテプ4世）に仕えた宮廷彫刻家・トトメスのアトリエ跡を調査していたドイツ人研究団が、1912年に発掘したものです。以来100年余にわたり、独埃間で返す返さないの国際裁判が続いていますが、かのアドルフ・ヒトラーは1930年代の時点で「絶対に手放さない」と断固拒絶していたそうなので、稀代の独裁者も、3000年ぶりに蘇った隻眼の美女に一目惚れだったのでしょう。それに対して日本はと言えば……
 
-<figure style="margin: 2rem 0;">
-  <Image src={Haniwa} alt="作者不詳『埴輪 踊る人々』" width={720} style="display:block; margin: 0 auto; width:100%; height:auto;" />
-  <figcaption style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">作者不詳『埴輪 踊る人々』（6世紀頃）東京国立博物館（Public Domain, Photo：Wikimedia Commons）</figcaption>
+<figure>
+  <Image src={Haniwa} alt="作者不詳『埴輪 踊る人々』" width={720}/>
+  <figcaption>作者不詳『埴輪 踊る人々』（6世紀頃）東京国立博物館（Public Domain, Photo：Wikimedia Commons）</figcaption>
 </figure>
 
 **2000年近く後でまだこれですからね。** ハニワは可愛くて大好きですが、『ネフェルティティ』とくらべては、さすがに分が悪い。ちなみに、
 
-<ul style="border-left: 3px solid #ddd; padding-left: 1.2em; margin: 1.6rem 0; list-style: none;">
-  <li>・サモトラケのニケ（紀元前261年頃、紀元前190年頃、諸説あり）</li>
-  <li>・ミロのヴィーナス（紀元前130年-紀元前100年頃）</li>
-  <li>・ナスカの地上絵（紀元前200年から紀元800年頃）</li>
-  <li>・イースター島のモアイ（10世紀頃）</li>
-</ul>
+<Box>
+- サモトラケのニケ（紀元前261年頃、紀元前190年頃、諸説あり）
+- ミロのヴィーナス（紀元前130年-紀元前100年頃）
+- ナスカの地上絵（紀元前200年から紀元800年頃）
+- イースター島のモアイ（10世紀頃）
+</Box>
 
 『ネフェルティティ』だけ、年代のケタが違うんですよ。まるで小学1年生の算数の授業で、一人だけリーマン幾何学を説いている天才児のような。どれだけ爆走していたのかと。
 
 しかし、そんな古代エジプトの叡智に満ちたイメージも、次の作品を観た時、音を立てて崩れ落ちました。
 
-<figure style="margin: 2rem 0;">
-  <Image src={Medjed} alt="作者不詳『メジェド神』" width={720} style="display:block; margin: 0 auto; width:100%; height:auto;" />
-  <figcaption style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">作者不詳『「死者の書（グリーンフィールド・パピルス）」に描かれたメジェド神』（紀元前950年頃）大英博物館、ロンドン</figcaption>
+<figure>
+  <Image src={Medjed} alt="作者不詳『メジェド神』" width={720} />
+  <figcaption>作者不詳『「死者の書（グリーンフィールド・パピルス）」に描かれたメジェド神』（紀元前950年頃）大英博物館、ロンドン</figcaption>
 </figure>
 
-<p style="font-size: 28px; font-weight: 700; font-family: 'Noto Sans JP', sans-serif; margin: 2rem 0;">「二次元は苦手だったのか?」</p>
+<BigText>「二次元は苦手だったのか?」</BigText>
 
 2012年だったでしょうか、 森アーツセンターギャラリーで開催された「大英博物館 古代エジプト展」での紹介をきっかけに、突如SNSを席巻した古代神・メジェド。『ネフェルティティ』より400年も後なのに……。「エジプトわからんなぁ」と首をひねった次第です。もちろん私は、これも大好きです。

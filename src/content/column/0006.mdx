@@ -21,20 +21,21 @@ refs:
 ---
 
 import { Image } from 'astro:assets';
+import Box from '../../components/Box.astro';
 import YouTube from '../../components/YouTube.astro';
 import SebastianIradier from '../../assets/column/0006/0006_1_Sebastian_Iradier.jpg';
 import DanielSchmid from '../../assets/column/0006/0006_2_Daniel_Schmid.jpg';
 
-<figure style="margin: 2rem 0;">
+<figure>
   <YouTube url="https://www.youtube.com/watch?v=eqZrVmG1iXg" />
-  <figcaption style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">ダニエル・シュミット『ラ・パロマ』（1974）予告編</figcaption>
+  <figcaption>ダニエル・シュミット『ラ・パロマ』（1974）予告編</figcaption>
 </figure>
 
 前稿の<a href="/column/0005">ヴィラ＝ロボス</a>が登場するはるか以前に、セバスティアン・イラディエル（1809－1865）という音楽家がいました。メンデルスゾーンと同年の生まれなので、時代的には前期ロマン派になりますが、音楽史の主流とは離れた独自の魅力ある作品を遺した人物です。
 
-<figure style="margin: 2rem 0;">
-  <Image src={SebastianIradier} alt="セバスティアン・イラディエル" width={720} style="display:block; margin: 0 auto; width:100%; height:auto;" />
-  <figcaption style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">セバスティアン・イラディエル（1809－1865）</figcaption>
+<figure>
+  <Image src={SebastianIradier} alt="セバスティアン・イラディエル" width={720}  />
+  <figcaption >セバスティアン・イラディエル（1809－1865）</figcaption>
 </figure>
 
 彼はスペインのバスク地方出身で、キューバを訪れた際にハバネラと出会い、もっぱらこのリズムのために作品を書きました。オペラ『カルメン』の有名なハバネラ（アリア「恋は野の鳥」）も、実は彼の作品です。ビゼーは民謡と誤解して流用してしまったのですが、150年以上も昔の曲なのに、エヴァーグリーンというか、ポップでキャッチーなんですよね。
@@ -48,9 +49,11 @@ import DanielSchmid from '../../assets/column/0006/0006_2_Daniel_Schmid.jpg';
 
 野暮ながらストーリーを要約すると——
 
->・広大な城館に暮らす富豪の青年貴族イジドールは、怪しげで退廃的な高級娼館に通い詰めていた。そこで夜な夜な気だるげに歌う人気の歌姫ヴィオラ、通称「ラ・パロマ」に熱狂的な求愛を続けるが、酒に溺れるヴィオラから冷酷に拒絶される。<br />
->・しかし彼女は結核で倒れ、医者から余命あとわずかと宣告されてしまう。死を覚悟したヴィオラはついにイジドールのプロポーズを受け入れ、二人は結ばれる。イジドールは彼女をヨーロッパ各地の高級保養地を回って手厚く看病する。すると奇跡的にヴィオラの病状は回復する。<br />
->・夫の盲目的な愛によって命を救われたはずのヴィオラは、イジドールの幼馴染である友人ラウルと出会い、激しく燃え上がるような本物の恋に落ちる。駆け落ちの計画を立てるが、失敗に終わり、ラウルは去る。イジドールからもラウルとの関係を拒絶されたヴィオラは、生きる気力を完全に失う。彼女は自ら毒をあおるようになり、奇怪な化粧を施したまま、死の間際、イジドールに「死後数年経ったら私の墓を掘り起こし、その骨を骨壺に収めて家族の霊廟に安置してほしい」という奇妙な遺言を残す。<br />
+<Box>
+- 広大な城館に暮らす富豪の青年貴族イジドールは、怪しげで退廃的な高級娼館に通い詰めていた。そこで夜な夜な気だるげに歌う人気の歌姫ヴィオラ、通称「ラ・パロマ」に熱狂的な求愛を続けるが、酒に溺れるヴィオラから冷酷に拒絶される。
+- しかし彼女は結核で倒れ、医者から余命あとわずかと宣告されてしまう。死を覚悟したヴィオラはついにイジドールのプロポーズを受け入れ、二人は結ばれる。イジドールは彼女をヨーロッパ各地の高級保養地を回って手厚く看病する。すると奇跡的にヴィオラの病状は回復する。
+- 夫の盲目的な愛によって命を救われたはずのヴィオラは、イジドールの幼馴染である友人ラウルと出会い、激しく燃え上がるような本物の恋に落ちる。駆け落ちの計画を立てるが、失敗に終わり、ラウルは去る。イジドールからもラウルとの関係を拒絶されたヴィオラは、生きる気力を完全に失う。彼女は自ら毒をあおるようになり、奇怪な化粧を施したまま、死の間際、イジドールに「死後数年経ったら私の墓を掘り起こし、その骨を骨壺に収めて家族の霊廟に安置してほしい」という奇妙な遺言を残す。
+</Box>
 
 この先はネタバレになるので控えますが、夢の論理というか、思いもよらず驚異の部屋（Wunderkammer）の扉を開けてしまったような、そんな印象です。
 
@@ -58,23 +61,23 @@ import DanielSchmid from '../../assets/column/0006/0006_2_Daniel_Schmid.jpg';
 
 ヴェルディの『椿姫』を思い起こさずにいられません。『ラ・パロマ』のヴィオラに対して『椿姫』のヒロインはヴィオレッタ。しかし引用というには、あまりにも儚い相似です。ほかにもマスネー『マノン』、ドニゼッティ『ランメルモールのルチア』、ベッリーニ『夢遊病の女』、ビゼー『カルメン』等々、数々のオペラがデジャヴのように、また影のように、次々に脳裏をかすめていくような気がします。
 
-<figure style="margin: 2rem 0;">
+<figure>
   <YouTube url="https://www.youtube.com/watch?v=kwSsjwpaREE" />
-  <figcaption style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">『ラ・パロマ』より『死の都』のアリア「私に残された幸せ」</figcaption>
+  <figcaption>『ラ・パロマ』より『死の都』のアリア「私に残された幸せ」</figcaption>
 </figure>
 
 シュミットはスイスのグラウビュンデン州フリムス＝ヴァルトハウスという、19世紀から保養地として発展した美しいアルプスの高級リゾート地の出身で——日本だと軽井沢のようなイメージでしょうか——、実家は老舗のホテルだったそうです。華やかな、しかしどこか浮世離れした社交界の雰囲気の中で生まれ育った彼は、映画とオペラに熱中する少年時代を過ごし、長じて映画監督となり、オペラの演出も手がけました。
 
 なおシュミットは、ライナー・ヴェルナー・ファスビンダーや『ラ・パロマ』のヒロインを務めたイングリット・カーフェンらとともに映画製作会社を立ち上げていますが、その社名が「タンゴ・フィルム」です。異国情緒とメロドラマ、そして愛と死が隣り合わせの濃厚な中南米世界は、遠い場所への憧れと幻想の源泉だったのでしょうか。
 
-<figure style="margin: 2rem 0;">
-  <Image src={DanielSchmid} alt="ダニエル・シュミット" width={720} style="display:block; margin: 0 auto; width:100%; height:auto;" />
-  <figcaption style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">ダニエル・シュミット（1941－2006）</figcaption>
+<figure>
+  <Image src={DanielSchmid} alt="ダニエル・シュミット" width={720} />
+  <figcaption>ダニエル・シュミット（1941－2006）</figcaption>
 </figure>
 
 シュミットはのちに日本の舞踏家・大野一雄の伝説的な演目『ラ・アルヘンティーナ（アルゼンチン）を讃えて』を観て、ヨーロッパと南米、そして日本がゴチャ混ぜになった、狂おしいまでの美に衝撃を受けます。それがきっかけで、短編『大野一雄』（1994）やドキュメンタリー『書かれた顔』（1995）を製作しますが、これもアルゼンチンを経由した彼岸の夢の世界の顕現だったのだろうかと思います。不思議な驚きに魅せられる世界をぜひ一度ご覧ください。
 
-<figure style="margin: 2rem 0;">
+<figure>
   <YouTube url="https://www.youtube.com/watch?v=ezPmXVUsstg" />
-  <figcaption style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">短編『大野一雄』（1994）</figcaption>
+  <figcaption>短編『大野一雄』（1994）</figcaption>
 </figure>

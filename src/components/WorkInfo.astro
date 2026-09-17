@@ -1,0 +1,42 @@
+---
+/**
+ * WorkInfo — 記事末尾の作品情報ボックス
+ *
+ * 使い方（MDX内）:
+ *   import WorkInfo from '../../components/WorkInfo.astro';
+ *
+ *   <WorkInfo
+ *     text="カエターノ・ヴェローゾ『アラサー・アズール』→ Amazon"
+ *     url="https://www.amazon.co.jp/dp/B00005FEE2"
+ *   />
+ */
+interface Props {
+  text: string;
+  url: string;
+}
+const { text, url } = Astro.props;
+---
+
+<div class="work-info">
+  <p class="work-info-label">作品情報</p>
+  <a href={url} target="_blank" rel="noopener" class="work-info-link">{text}</a>
+</div>
+
+<style>
+  .work-info {
+    margin: 2rem 0;
+    padding: 1.2rem;
+    border: 0.5px solid #ddd;
+  }
+  .work-info-label {
+    font-size: 11px;
+    color: #aaa;
+    margin-bottom: 8px;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+  .work-info-link {
+    font-size: 14px;
+    color: #1a1a1a;
+    font-family: 'Noto Sans JP', sans-serif;
+  }
+</style>

@@ -1,0 +1,21 @@
+---
+/**
+ * BigText — 記事中の決めゼリフ用
+ *
+ * 使い方（MDX内）:
+ *   import BigText from '../../components/BigText.astro';
+ *
+ *   <BigText>「なんで描いたの?」</BigText>
+ */
+---
+
+<p class="big-text"><slot /></p>
+
+<style>
+  .big-text {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: 'Noto Sans JP', sans-serif;
+    margin: 2rem 0;
+  }
+</style>
