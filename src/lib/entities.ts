@@ -354,7 +354,7 @@ export const entities = {
     category: "person", 
   },
 
-  // ── 0006 ──
+// ── 0006 ──
   "daniel-schmid": {
     canonical: "ダニエル・シュミット",
     aliases: ["ダニエル・シュミット", "Daniel Schmid"],
@@ -372,6 +372,23 @@ export const entities = {
     aliases: ["セバスティアン・イラディエル", "Sebastián Iradier"],
     slug: null,
     category: "person", 
+  "la-paloma-film": {
+    canonical: "ラ・パロマ（音楽）",
+    aliases: ["ラ・パロマ"],
+    slug: "0006",
+    category: "work", 
+  },
+  "georges-bizet": {
+    canonical: "ジョルジュ・ビゼー",
+    aliases: ["ジョルジュ・ビゼー", "Georges Bizet"],
+    slug: null,
+    category: "person", 
+  },
+  "carmen": {
+    canonical: "カルメン",
+    aliases: ["カルメン", "Carmen"],
+    slug: null, // 単独記事の予定あり
+    category: "work", 
   },
   "nakamura-toyo": {
     canonical: "中村とうよう",
@@ -379,11 +396,84 @@ export const entities = {
     slug: null, // 単独記事の予定あり
     category: "person", 
   },
+  "john-philip-sousa": {
+    canonical: "ジョン・フィリップ・スーザ",
+    aliases: ["スーザ", "ジョン・フィリップ・スーザ","John Philip Sousa"],
+    slug: null,
+    category: "person", 
+  },
+ "eva-peron": {
+    canonical: "エヴァ・ペロン",
+    aliases: ["エヴィータ", "エビータ", "エヴァ・ペロン", "エバ・ペロン"," Eva Perón", "Evita"],
+    slug: null,
+    category: "person", 
+  },
+ "erich-wolfgang-korngold": {
+    canonical: "エーリヒ・ヴォルフガング・コルンゴルト",
+    aliases: ["コルンゴルト", "ヴォルフガング・コルンゴルト", "エーリヒ・ヴォルフガング・コルンゴルト", "Erich Wolfgang Korngold"],
+    slug: null,
+    category: "person", 
+  },
+ "die-tote-stadt": {
+    canonical: "死の都",
+    aliases: ["死の都", "Die tote Stadt"],
+    slug: null,
+    category: "work", 
+  },
+ "giuseppe-verdi": {
+    canonical: "ジュゼッペ・ヴェルディ",
+    aliases: ["ジュゼッペ・ヴェルディ", "Giuseppe Verdi"],
+    slug: null,
+    category: "person", 
+  },
+ "la-traviata": {
+    canonical: "椿姫",
+    aliases: ["椿姫", "La traviata"],
+    slug: null,
+    category: "work", 
+  },
+ "gaetano-donizett": {
+    canonical: "ガエターノ・ドニゼッティ",
+    aliases: ["ガエターノ・ドニゼッティ", "Gaetano Donizetti"],
+    slug: null,
+    category: "person", 
+  },
+ "lucia-di-lammermoor": {
+    canonical: "ランメルモールのルチア",
+    aliases: ["ランメルモールのルチア", "Lucia di Lammermoor"],
+    slug: null,
+    category: "work", 
+  },
+ "vincenzo-bellini": {
+    canonical: "ヴィンチェンツォ・ベッリーニ",
+    aliases: ["ヴィンチェンツォ・ベッリーニ", "Vincenzo Bellini"],
+    slug: null,
+    category: "person", 
+  },
+ "a-sonnambula": {
+    canonical: "夢遊病の女",
+    aliases: ["夢遊病の女", "a Sonnambula"],
+    slug: null,
+    category: "work", 
+  },
+ "rainer-werner-fassbinder": {
+    canonical: "ライナー・ヴェルナー・ファスビンダー",
+    aliases: ["ファスビンダー", "ライナー・ヴェルナー・ファスビンダー", "Rainer Werner Fassbinder"],
+    slug: null,
+    category: "person", 
+  },
+ "ingrid-caven": {
+    canonical: "イングリット・カーフェン",
+    aliases: ["イングリット・カーフェン", "Ingrid Caven"],
+    slug: null,
+    category: "person", 
+  },
   "ohno-kazuo": {
     canonical: "大野一雄",
     aliases: ["大野一雄", "Ono Kazuo"],
     slug: null, // 単独記事の予定あり
     category: "person", 
+  },
   },
 
   // ── 0007 ──
