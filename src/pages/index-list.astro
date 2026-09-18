@@ -12,8 +12,8 @@
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SiteNav from '../../components/SiteNav.astro';
-import { entities } from '../../lib/entities';
+import SiteNav from '../components/SiteNav.astro';
+import { entities } from '../lib/entities';
 
 // ── 全記事から subjects を逆引き ──
 const allEntries = await getCollection('column');
