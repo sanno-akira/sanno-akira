@@ -33,11 +33,23 @@ export const entities = {
     slug: "0001",
     category: "work",  
   },
-    "matthew-perry": {
-    canonical: "ペリー",
-    aliases: ["ペリー", "マシュー・ペリー", "Matthew Perry"],
-    slug: null, // 0001の中の一部分なので、単独記事にはリンクしない
-    category: "person", 
+ "matthew-c-perry": {
+    canonical: "マシュー・ペリー",
+    aliases: ["ペリー", "マシュー・ペリー", "Matthew C. Perry", "Matthew Calbraith Perry"],
+    slug: null,
+    category: "person",
+  },
+  "tai-zu-takahashi": {
+    canonical: "鯛図（髙橋由一）",
+    aliases: ["鯛図"],
+    slug: null,
+    category: "work",
+  },
+  "namaribushi-takahashi": {
+    canonical: "なまり節（髙橋由一）",
+    aliases: ["なまり節"],
+    slug: null,
+    category: "work",
   },
 
   // ── 0002 ──
@@ -65,23 +77,65 @@ export const entities = {
     slug: null,
     category: "person", 
   },
-  "haniwa": {
-    canonical: "埴輪",
-    aliases: ["はにわ", "ハニワ", "踊る人々"],
-    slug: null,
-    category: "work", 
-  },
-  "book-of-the-dead-egypt": {
-    canonical: "死者の書（エジプト、古代文書）",
-    aliases: ["死者の書"],
-    slug: null,
-    category: "work", 
-  },
-  "medjed": {
-    canonical: "メジェド",
-    aliases: ["メジェド", "メジェド神", "Medjed"],
+  "adolf-hitler": {
+    canonical: "ヒトラー",
+    aliases: ["アドルフ・ヒトラー", "アドルフ・ヒットラー",  "Adolf Hitler"],
     slug: null,
     category: "person", 
+  },
+  "haniwa-dancing-figures": {
+    canonical: "埴輪 踊る人々",
+    aliases: ["埴輪 踊る人々", "埴輪", "はにわ", "ハニワ"],
+    slug: null,
+    category: "work",
+  },
+  "book-of-the-dead-egypt": {
+    canonical: "死者の書（古代エジプト）",
+    aliases: ["死者の書", "グリーンフィールド・パピルス"],
+    slug: null,
+    category: "work",
+  },
+  "herodotus-histories": {
+    canonical: "歴史（ヘロドトス）",
+    aliases: ["歴史"],
+    slug: null,
+    category: "work",
+  },
+  "akhenaten": {
+    canonical: "アクエンアテン",
+    aliases: ["アクエンアテン", "アメンホテプ4世", "Akhenaten", "Amenhotep IV"],
+    slug: null,
+    category: "person",
+  },
+  "nike-of-samothrace": {
+    canonical: "サモトラケのニケ",
+    aliases: ["サモトラケのニケ"],
+    slug: null,
+    category: "work",
+  },
+  "venus-de-milo": {
+    canonical: "ミロのヴィーナス",
+    aliases: ["ミロのヴィーナス"],
+    slug: null,
+    category: "work",
+  },
+  "nazca-lines": {
+    canonical: "ナスカの地上絵",
+    aliases: ["ナスカの地上絵"],
+    slug: null,
+    category: "work",
+  },
+  "moai": {
+    canonical: "モアイ",
+    aliases: ["モアイ", "イースター島のモアイ"],
+    slug: null,
+    category: "work",
+  },
+  "pyramid-battle": {
+    canonical: "ピラミッドの戦い",
+    aliases: ["ピラミッドの戦い"],
+    slug: null,
+    category: "concept",
   },
 
   // ── 0003 ──
@@ -99,7 +153,13 @@ export const entities = {
   },
   "miles-davis": {
     canonical: "マイルス・デイヴィス",
-    aliases: ["マイルス・デイヴィス", "マイルス", "デイヴィス", "Miles Davis"],
+    aliases: ["マイルス・デイヴィス", "Miles Davis"],
+    slug: null,
+    category: "person", 
+  },
+   "wayne-shorter": {
+    canonical: "ウェイン・ショーター",
+    aliases: ["ウェイン・ショーター", "Wayne Shorter"],
     slug: null,
     category: "person", 
   },
@@ -127,11 +187,47 @@ export const entities = {
     slug: null,
     category: "work", 
   },
-   "thoth": {
+  "thoth": {
     canonical: "トト",
     aliases: ["トト", "トート", "トト神", "トート神", "Thoth"],
     slug: null,
     category: "person", 
+  },
+  "bud-powell": {
+    canonical: "バド・パウエル",
+    aliases: ["バド・パウエル", "Bud Powell"],
+    slug: null,
+    category: "person",
+  },
+  "cleopatras-dream": {
+    canonical: "クレオパトラの夢",
+    aliases: ["クレオパトラの夢"],
+    slug: null,
+    category: "work",
+  },
+ "harlem-renaissance": {
+    canonical: "ハーレム・ルネサンス",
+    aliases: ["ハーレム・ルネサンス"],
+    slug: null,
+    category: "concept",
+  },
+ "afrocentrism": {
+    canonical: "アフロセントリズム",
+    aliases: ["アフロセントリズム", "アフリカ中心主義"],
+    slug: null,
+    category: "concept",
+  },
+ "black-arts-movement": {
+    canonical: "ブラック・アーツ・ムーブメント",
+    aliases: ["ブラック・アーツ・ムーブメント", "黒人芸術運動"],
+    slug: null,
+    category: "concept",
+ },
+"jes-grew": {
+    canonical: "ジェス・グルー",
+    aliases: ["ジェス・グルー", "ジェスラ", "Jes Grew"],
+    slug: null,
+    category: "concept",
   },
 
 // ── 0004 ──
@@ -180,6 +276,24 @@ export const entities = {
   "os-mutantes": {
     canonical: "ムタンチス",
     aliases: ["ムタンチス", "Os Mutantes"],
+    slug: null,
+    category: "person", 
+  },
+    "kurt-cobain": {
+    canonical: "カート・コバーン",
+    aliases: ["カート・コバーン", "Kurt Cobain"],
+    slug: null,
+    category: "person", 
+  },
+  "beck-musician": {
+    canonical: "ベック",
+    aliases: ["ベック", "Beck", "Beck Hansen"],
+    slug: null,
+    category: "person", 
+  },
+  "david-byrne": {
+    canonical: "デイヴィッド・バーン",
+    aliases: ["デイヴィッド・バーン", "David Byrne"],
     slug: null,
     category: "person", 
   },
@@ -243,13 +357,13 @@ export const entities = {
     category: "person", 
     slug: null,
   },
-  "macunaima(cinema)": {
+  "macunaima-cinema": {
     canonical: "マクナイーマ（映画）",
     aliases: ["マクナイーマ", "Macunaíma"],
     category: "work", 
     slug: null,
   },
-  "macunaima(novel)": {
+  "macunaima-novel": {
     canonical: "マクナイーマ（小説）",
     aliases: ["マクナイーマ", "Macunaíma"],
     category: "work", 
@@ -333,6 +447,66 @@ export const entities = {
     slug: null,
     category: "person", 
   },
+  "cuban-revolution": {
+    canonical: "キューバ革命",
+    aliases: ["キューバ革命"],
+    slug: null,
+    category: "concept",
+  },
+  "tropicalismo": {
+    canonical: "トロピカリスモ",
+    aliases: ["トロピカリスモ", "トロピカリア", "Tropicália", "Tropicalismo"],
+    slug: null,
+    category: "concept",
+  },
+  "oswald-de-andrade": {
+    canonical: "オズヴァルド・ジ・アンドラーデ",
+    aliases: ["オズヴァルド・ジ・アンドラーデ", "オズヴァルド・デ・アンドラーデ", "Oswald de Andrade"],
+    slug: null,
+    category: "person",
+  },
+  "manifesto-antropofago": {
+    canonical: "食人宣言",
+    aliases: ["食人宣言", "マニフェスト・アントロポファジア", "Manifesto Antropófago"],
+    slug: null,
+    category: "work",
+  },
+  "anthropophagy": {
+    canonical: "アントロポファジア",
+    aliases: ["アントロポファジア", "食人運動", "Antropofagia"],
+    slug: null,
+    category: "concept",
+  },
+  "cinema-novo": {
+    canonical: "シネマ・ノーヴォ",
+    aliases: ["シネマ・ノーヴォ", "Cinema Novo"],
+    slug: null,
+    category: "concept",
+  },
+  "julia-moreno": {
+    canonical: "Júlia/Moreno",
+    aliases: ["Júlia/Moreno"],
+    slug: null,
+    category: "work",
+  },
+  "tu-me-acostumbraste": {
+    canonical: "Tu Me Acostumbraste",
+    aliases: ["Tu Me Acostumbraste"],
+    slug: null,
+    category: "work",
+  },
+  "de-palavra-em-palavra": {
+    canonical: "De Palavra em Palavra",
+    aliases: ["De Palavra em Palavra"],
+    slug: null,
+    category: "work",
+  },
+  "concrete-poetry": {
+    canonical: "具体詩",
+    aliases: ["具体詩", "コンクリート・ポエトリー", "Poesia Concreta"],
+    slug: null,
+    category: "concept",
+  },
 
   // ── 0005 ──
   "villa-lobos": {
@@ -341,10 +515,16 @@ export const entities = {
     slug: "0005",
     category: "person", 
   },
-  "bachianas-brasileiras-1": {
+   "bachianas-brasileiras-1": {
     canonical: "ブラジル風バッハ第1番",
     aliases: ["ブラジル風バッハ第1番", "ブラジル風バッハ"],
     slug: "0005",
+    category: "work", 
+  },
+   "bachianas-brasileiras-5": {
+    canonical: "ブラジル風バッハ第5番",
+    aliases: ["ブラジル風バッハ第5番", "ブラジル風バッハ"],
+    slug: null,
     category: "work", 
   },
   "lalo-schifrin": {
@@ -352,6 +532,12 @@ export const entities = {
     aliases: ["ラロ・シフリン", "Lalo Schifrin"],
     slug: null,
     category: "person", 
+  },
+  "new-fantasy-schifrin": {
+   canonical: "New Fantasy（ラロ・シフリン）",
+   aliases: ["New Fantasy"],
+   slug: null,
+   category: "work",
   },
 
 // ── 0006 ──
@@ -372,7 +558,8 @@ export const entities = {
     aliases: ["セバスティアン・イラディエル", "Sebastián Iradier"],
     slug: null,
     category: "person", 
-  "la-paloma-film": {
+  },
+  "la-paloma-music": {
     canonical: "ラ・パロマ（音楽）",
     aliases: ["ラ・パロマ"],
     slug: "0006",
@@ -474,53 +661,262 @@ export const entities = {
     slug: null, // 単独記事の予定あり
     category: "person", 
   },
+  "richard-tauber": {
+  canonical: "リヒャルト・タウバー",
+  aliases: ["リヒャルト・タウバー", "Richard Tauber"],
+  slug: null,
+  category: "person",
+  },
+ "mariettas-lied": {
+  canonical: "私に残された幸せ（マリエッタの唄）",
+  aliases: ["私に残された幸せ", "マリエッタの唄", "Mariettas Lied"],
+  slug: null,
+  category: "work",
+  },
+ "massenet-manon": {
+  canonical: "マノン（マスネー）",
+  aliases: ["マノン"],
+  slug: null,
+  category: "work",
+  },
+ "tango-film-company": {
+  canonical: "タンゴ・フィルム",
+  aliases: ["タンゴ・フィルム"],
+  slug: null,
+  category: "work",
+  },
+ "ohno-la-argentina": {
+  canonical: "ラ・アルヘンティーナを讃えて",
+  aliases: ["ラ・アルヘンティーナを讃えて", "アルゼンチンを讃えて"],
+  slug: null,
+  category: "work",
+ },
+ "written-face": {
+  canonical: "書かれた顔",
+  aliases: ["書かれた顔"],
+  slug: null,
+  category: "work",
+  },
+ "habanera": {
+  canonical: "ハバネラ",
+  aliases: ["ハバネラ", "恋は野の鳥"],
+  slug: null,
+  category: "concept",
   },
 
   // ── 0007 ──
-  "stefan-zweig": {
+ "stefan-zweig": {
     canonical: "シュテファン・ツヴァイク",
     aliases: ["シュテファン・ツヴァイク", "ツヴァイク", "Stefan Zweig"],
     slug: "0007",
     category: "person", 
   },
-  "the-world-of-yesterday": {
+ "the-world-of-yesterday": {
     canonical: "昨日の世界",
     aliases: ["昨日の世界"],
     slug: "0007",
     category: "work", 
   },
+ "teatro-colon": {
+  canonical: "テアトル・コロン",
+  aliases: ["テアトル・コロン", "コロン劇場", "Teatro Colón"],
+  slug: null,
+  category: "work",
+  },
+ "chess-story-zweig": {
+  canonical: "チェスの話（ツヴァイク）",
+  aliases: ["チェスの話", "チェス奇譚", "Schachnovelle"],
+  slug: null,
+  category: "work",
+  },
+ "brazil-land-of-future": {
+  canonical: "未来の国ブラジル（ツヴァイク）",
+  aliases: ["未来の国ブラジル"],
+  slug: null,
+  category: "work",
+  },
+ "erich-kleiber": {
+  canonical: "エーリッヒ・クライバー",
+  aliases: ["エーリッヒ・クライバー", "Erich Kleiber"],
+  slug: null,
+  category: "person",
+  },
+ "fritz-busch": {
+  canonical: "フリッツ・ブッシュ",
+  aliases: ["フリッツ・ブッシュ", "Fritz Busch"],
+  slug: null,
+  category: "person",
+  },
+ "getulio-vargas": {
+  canonical: "ジェトゥリオ・ヴァルガス",
+  aliases: ["ジェトゥリオ・ヴァルガス", "ヴァルガス", "Getúlio Vargas"],
+  slug: null,
+  category: "person",
+  },
+ "adolf-eichmann": {
+  canonical: "アドルフ・アイヒマン",
+  aliases: ["アドルフ・アイヒマン", "アイヒマン", "Adolf Eichmann"],
+  slug: null,
+  category: "person",
+  },
+ "josef-mengele": {
+  canonical: "ヨーゼフ・メンゲレ",
+  aliases: ["ヨーゼフ・メンゲレ", "メンゲレ", "Josef Mengele"],
+  slug: null,
+  category: "person",
+  },
+ "das-andere-deutschland": {
+  canonical: "もうひとつのドイツ",
+  aliases: ["もうひとつのドイツ", "Das andere Deutschland"],
+  slug: null,
+  category: "concept",
+  },
 
   // ── 0008 ──
-  "maurice-ravel": {
-    canonical: "モリス・ラヴェル",
-    aliases: ["モリス・ラヴェル", "ラヴェル", "ラベル", "Ravel"],
-    slug: "0008",
-    category: "person",
+ "maurice-ravel": {
+  canonical: "モリス・ラヴェル",
+  aliases: ["モリス・ラヴェル", "ラヴェル", "ラベル", "Ravel"],
+  slug: "0008",
+  category: "person",
   },
-  "la-valse": {
-    canonical: "ラ・ヴァルス",
-    aliases: ["ラ・ヴァルス", "La Valse"],
-    slug: "0008",
-    category: "work",
+ "la-valse": {
+  canonical: "ラ・ヴァルス",
+  aliases: ["ラ・ヴァルス", "La Valse"],
+  slug: "0008",
+  category: "work",
   },
-  "bolero": {
-    canonical: "ボレロ",
-    aliases: ["ボレロ", "Boléro"],
-    slug: null,
-    category: "work",
+ "bolero": {
+  canonical: "ボレロ",
+  aliases: ["ボレロ", "Boléro"],
+  slug: null,
+   category: "work",
   },
-  "red-vienna": {
-    canonical: "赤いウィーン",
-    aliases: ["赤いウィーン"],
-    slug: null,
-    category: "concept",
+ "red-vienna": {
+  canonical: "赤いウィーン",
+  aliases: ["赤いウィーン"],
+  slug: null,
+  category: "concept",
   },
-  "karl-marx-hof": {
-    canonical: "カール・マルクス・ホーフ",
-    aliases: ["カール・マルクス・ホーフ", "Karl-Marx-Hof"],
-    slug: null,
-    category: "work",
+ "karl-marx-hof": {
+  canonical: "カール・マルクス・ホーフ",
+  aliases: ["カール・マルクス・ホーフ", "Karl-Marx-Hof"],
+  slug: null,
+  category: "work",
   },
+ "pavane-pour-une-infante": {
+  canonical: "死せる王女のためのパヴァーヌ",
+  aliases: ["死せる王女のためのパヴァーヌ", "亡き王女のためのパヴァーヌ"],
+  slug: null,
+  category: "work",
+},
+"menuet-antique": {
+  canonical: "古風なメヌエット",
+  aliases: ["古風なメヌエット"],
+  slug: null,
+  category: "work",
+},
+"piano-trio-ravel": {
+  canonical: "ピアノ三重奏曲（ラヴェル）",
+  aliases: ["ピアノ三重奏曲"],
+  slug: null,
+  category: "work",
+},
+"tombeau-de-couperin": {
+  canonical: "クープランの墓",
+  aliases: ["クープランの墓", "Le Tombeau de Couperin"],
+  slug: null,
+  category: "work",
+},
+"daphnis-et-chloe": {
+  canonical: "ダフニスとクロエ",
+  aliases: ["ダフニスとクロエ", "Daphnis et Chloé"],
+  slug: null,
+  category: "work",
+},
+"string-quartet-ravel": {
+  canonical: "弦楽四重奏曲（ラヴェル）",
+  aliases: ["弦楽四重奏曲"],
+  slug: null,
+  category: "work",
+},
+"sonata-violin-cello-ravel": {
+  canonical: "ヴァイオリンとチェロのためのソナタ（ラヴェル）",
+  aliases: ["ヴァイオリンとチェロのためのソナタ"],
+  slug: null,
+  category: "work",
+},
+"lenfant-et-les-sortileges": {
+  canonical: "子供と魔法",
+  aliases: ["子供と魔法", "子どもと魔法", "L'enfant et les sortilèges"],
+  slug: null,
+  category: "work",
+},
+"left-hand-concerto": {
+  canonical: "左手のためのピアノ協奏曲",
+  aliases: ["左手のためのピアノ協奏曲"],
+  slug: null,
+  category: "work",
+},
+"piano-concerto-g-ravel": {
+  canonical: "ピアノ協奏曲ト長調（ラヴェル）",
+  aliases: ["ピアノ協奏曲ト長調"],
+  slug: null,
+  category: "work",
+},
+"pictures-at-an-exhibition": {
+  canonical: "展覧会の絵",
+  aliases: ["展覧会の絵"],
+  slug: null,
+  category: "work",
+},
+"johann-strauss-ii": {
+  canonical: "ヨハン・シュトラウス2世",
+  aliases: ["ヨハン・シュトラウス二世", "ヨハン・シュトラウス2世", "Johann Strauss II"],
+  slug: null,
+  category: "person",
+},
+"franz-joseph-i": {
+  canonical: "フランツ・ヨーゼフ1世",
+  aliases: ["フランツ・ヨーゼフ1世", "Franz Joseph I"],
+  slug: null,
+  category: "person",
+},
+"empress-elisabeth": {
+  canonical: "エリザベート（シシィ）",
+  aliases: ["エリザベート", "シシィ", "Elisabeth"],
+  slug: null,
+  category: "person",
+},
+"richard-strauss": {
+  canonical: "リヒャルト・シュトラウス",
+  aliases: ["リヒャルト・シュトラウス", "Richard Strauss"],
+  slug: null,
+  category: "person",
+},
+"sakamoto-ryuichi": {
+  canonical: "坂本龍一",
+  aliases: ["坂本龍一"],
+  slug: null,
+  category: "person",
+},
+"nishimura-akira": {
+  canonical: "西村朗",
+  aliases: ["西村朗"],
+  slug: null,
+  category: "person",
+},
+"depouillement": {
+  canonical: "デプイユマン",
+  aliases: ["デプイユマン", "dépouillement"],
+  slug: null,
+  category: "concept",
+},
+"illusory-instrument": {
+  canonical: "幻影の楽器",
+  aliases: ["幻影の楽器", "Illusory Instrument"],
+  slug: null,
+  category: "concept",
+},
 
   // ── 0009 ──
   "alberto-giacometti": {
@@ -534,36 +930,6 @@ export const entities = {
     aliases: ["午前四時の宮殿"],
     slug: "0009",
     category: "work",
-  },
-  "louis-sullivan": {
-    canonical: "ルイス・サリヴァン",
-    aliases: ["ルイス・サリヴァン", "Louis Sullivan"],
-    slug: null,
-    category: "person",
-  },
-  "mies-van-der-rohe": {
-    canonical: "ミース・ファン・デル・ローエ",
-    aliases: ["ミース・ファン・デル・ローエ", "Mies van der Rohe"],
-    slug: null,
-    category: "person",
-  },
-  "arnold-schoenberg": {
-    canonical: "アルノルト・シェーンベルク",
-    aliases: ["アルノルト・シェーンベルク", "シェーンベルク", "Schoenberg"],
-    slug: null,
-    category: "person",
-  },
-  "anton-webern": {
-    canonical: "アントン・ヴェーベルン",
-    aliases: ["アントン・ヴェーベルン", "ヴェーベルン", "Webern"],
-    slug: null,
-    category: "person",
-  },
-  "jorge-luis-borges": {
-    canonical: "ホルヘ・ルイス・ボルヘス",
-    aliases: ["ホルヘ・ルイス・ボルヘス", "ボルヘス", "Borges"],
-    slug: null,
-    category: "person",
   },
   "fujimoto-yukio": {
     canonical: "藤本由紀夫",
@@ -583,14 +949,146 @@ export const entities = {
     slug: null, // 単独記事の予定あり
     category: "person",
   },
+  "louis-sullivan": {
+  canonical: "ルイス・サリヴァン",
+  aliases: ["ルイス・サリヴァン", "Louis Sullivan"],
+  slug: null,
+  category: "person",
+},
+"mies-van-der-rohe": {
+  canonical: "ミース・ファン・デル・ローエ",
+  aliases: ["ミース・ファン・デル・ローエ", "ミース", "Mies van der Rohe"],
+  slug: null,
+  category: "person",
+},
+"arnold-schoenberg": {
+  canonical: "アルノルト・シェーンベルク",
+  aliases: ["アルノルト・シェーンベルク", "シェーンベルク", "Arnold Schoenberg"],
+  slug: null,
+  category: "person",
+},
+"anton-webern": {
+  canonical: "アントン・ヴェーベルン",
+  aliases: ["アントン・ヴェーベルン", "ヴェーベルン", "Anton Webern"],
+  slug: null,
+  category: "person",
+},
+"webern-bagatelles": {
+  canonical: "弦楽四重奏のための6つのバガテル Op.9（ヴェーベルン）",
+  aliases: ["弦楽四重奏のための6つのバガテル", "6つのバガテル"],
+  slug: null,
+  category: "work",
+},
+"jorge-luis-borges": {
+  canonical: "ホルヘ・ルイス・ボルヘス",
+  aliases: ["ホルヘ・ルイス・ボルヘス", "ボルヘス", "Jorge Luis Borges"],
+  slug: null,
+  category: "person",
+},
+"borges-ficciones": {
+  canonical: "伝記集（ボルヘス）",
+  aliases: ["伝記集"],
+  slug: null,
+  category: "work",
+},
+"inframince": {
+  canonical: "アンフラマンス",
+  aliases: ["アンフラマンス", "inframince", "超薄", "極薄"],
+  slug: null,
+  category: "concept",
+},
+"taruho-thin-world": {
+  canonical: "薄板界（稲垣足穂）",
+  aliases: ["薄板界"],
+  slug: null,
+  category: "concept",
+},
+"taruho-to-kokuu": {
+  canonical: "タルホと虚空",
+  aliases: ["タルホと虚空"],
+  slug: null,
+  category: "work",
+},
+"usui-machi": {
+  canonical: "薄い街（稲垣足穂）",
+  aliases: ["薄い街"],
+  slug: null,
+  category: "work",
+},
+"fujimoto-stars": {
+  canonical: "STARS（藤本由紀夫）",
+  aliases: ["STARS"],
+  slug: null,
+  category: "work",
+},
+"ikeda-kikunae": {
+  canonical: "池田菊苗",
+  aliases: ["池田菊苗"],
+  slug: null,
+  category: "person",
+},
+"form-follows-function": {
+  canonical: "形態は機能に従う",
+  aliases: ["形態は機能に従う", "Form follows function"],
+  slug: null,
+  category: "concept",
+},
+"less-is-more": {
+  canonical: "Less is More",
+  aliases: ["Less is More"],
+  slug: null,
+  category: "concept",
+},
 
   // ── 0010 ──
-  "cycladic-civilization": {
-    canonical: "キクラデス文明",
-    aliases: ["キクラデス文明", "キクラデス"],
-    slug: "0010",
-    category: "work",
-  },
+"cycladic-civilization": {
+  canonical: "キクラデス文明",
+  aliases: ["キクラデス文明", "キクラデス"],
+  slug: "0010",
+  category: "concept",  // work → concept
+},
+"cycladic-female-figure": {
+  canonical: "キクラデスの女性像",
+  aliases: ["キクラデスの女性像"],
+  slug: null,
+  category: "work",
+},
+"christos-tsountas": {
+  canonical: "クリストス・ツンタス",
+  aliases: ["クリストス・ツンタス", "Christos Tsountas"],
+  slug: null,
+  category: "person",
+},
+"heinrich-schliemann": {
+  canonical: "シュリーマン",
+  aliases: ["シュリーマン", "Heinrich Schliemann"],
+  slug: null,
+  category: "person",
+},
+"arthur-evans": {
+  canonical: "エヴァンズ",
+  aliases: ["エヴァンズ", "Arthur Evans"],
+  slug: null,
+  category: "person",
+},
+"minoan-civilization": {
+  canonical: "ミノア文明",
+  aliases: ["ミノア文明", "クレタ文明"],
+  slug: null,
+  category: "concept",
+},
+"mycenaean-civilization": {
+  canonical: "ミケーネ文明",
+  aliases: ["ミケーネ文明"],
+  slug: null,
+  category: "concept",
+},
+"brancusi-pogany": {
+  canonical: "ポガニー嬢の肖像（ブランクーシ）",
+  aliases: ["ポガニー嬢の肖像"],
+  slug: null,
+  category: "work",
+},
   "cycladic-frying-pan": {
     canonical: "キクラデスのフライパン",
     aliases: ["キクラデスのフライパン"],
@@ -641,6 +1139,150 @@ export const entities = {
     slug: null,
     category: "person",
   },
+  "villiers-de-lisle-adam": {
+  canonical: "ヴィリエ・ド・リラダン",
+  aliases: ["ヴィリエ・ド・リラダン", "Villiers de l'Isle-Adam"],
+  slug: null,
+  category: "person",
+},
+"future-eve": {
+  canonical: "未来のイヴ",
+  aliases: ["未来のイヴ"],
+  slug: null,
+  category: "work",
+},
+"thomas-edison": {
+  canonical: "エジソン",
+  aliases: ["エジソン", "Thomas Edison"],
+  slug: null,
+  category: "person",
+},
+"olin-downes": {
+  canonical: "オーリン・ダウンズ",
+  aliases: ["オーリン・ダウンズ", "Olin Downes"],
+  slug: null,
+  category: "person",
+},
+"instruments-medieval-renaissance": {
+  canonical: "中世・ルネサンスの楽器",
+  aliases: ["中世・ルネサンスの楽器"],
+  slug: "0011",
+  category: "work",
+},
+"gryphon-band": {
+  canonical: "グリフォン",
+  aliases: ["グリフォン", "Gryphon"],
+  slug: null,
+  category: "person",
+},
+"paul-mccartney": {
+  canonical: "ポール・マッカートニー",
+  aliases: ["ポール・マッカートニー", "Paul McCartney"],
+  slug: null,
+  category: "person",
+},
+"jimi-hendrix": {
+  canonical: "ジミ・ヘンドリックス",
+  aliases: ["ジミ・ヘンドリックス", "Jimi Hendrix"],
+  slug: null,
+  category: "person",
+},
+"carole-king": {
+  canonical: "キャロル・キング",
+  aliases: ["キャロル・キング", "Carole King"],
+  slug: null,
+  category: "person",
+},
+"brian-wilson": {
+  canonical: "ブライアン・ウィルソン",
+  aliases: ["ブライアン・ウィルソン", "Brian Wilson"],
+  slug: null,
+  category: "person",
+},
+"aretha-franklin": {
+  canonical: "アレサ・フランクリン",
+  aliases: ["アレサ・フランクリン", "Aretha Franklin"],
+  slug: null,
+  category: "person",
+},
+"led-zeppelin": {
+  canonical: "レッド・ツェッペリン",
+  aliases: ["レッド・ツェッペリン", "Led Zeppelin"],
+  slug: null,
+  category: "person",
+},
+"stairway-to-heaven": {
+  canonical: "天国への階段",
+  aliases: ["天国への階段", "Stairway to Heaven"],
+  slug: null,
+  category: "work",
+},
+"battle-of-evermore": {
+  canonical: "限りなき戦い",
+  aliases: ["限りなき戦い", "The Battle of Evermore"],
+  slug: null,
+  category: "work",
+},
+"jimmy-page": {
+  canonical: "ジミー・ペイジ",
+  aliases: ["ジミー・ペイジ", "Jimmy Page"],
+  slug: null,
+  category: "person",
+},
+"robert-plant": {
+  canonical: "ロバート・プラント",
+  aliases: ["ロバート・プラント", "Robert Plant"],
+  slug: null,
+  category: "person",
+},
+"bert-jansch": {
+  canonical: "バート・ヤンシュ",
+  aliases: ["バート・ヤンシュ", "Bert Jansch"],
+  slug: null,
+  category: "person",
+},
+"roy-harper": {
+  canonical: "ロイ・ハーパー",
+  aliases: ["ロイ・ハーパー", "Roy Harper"],
+  slug: null,
+  category: "person",
+},
+"glenn-gould": {
+  canonical: "グレン・グールド",
+  aliases: ["グレン・グールド", "Glenn Gould"],
+  slug: null,
+  category: "person",
+},
+"shirley-collins": {
+  canonical: "シャーリー・コリンズ",
+  aliases: ["シャーリー・コリンズ", "Shirley Collins"],
+  slug: null,
+  category: "person",
+},
+"anthems-in-eden": {
+  canonical: "Anthems in Eden",
+  aliases: ["Anthems in Eden"],
+  slug: null,
+  category: "work",
+},
+"abbey-road-studios": {
+  canonical: "アビイ・ロード・スタジオ",
+  aliases: ["アビイ・ロード・スタジオ", "Abbey Road Studios"],
+  slug: null,
+  category: "work",
+},
+"swinging-london": {
+  canonical: "スウィンギン・ロンドン",
+  aliases: ["スウィンギン・ロンドン", "Swinging London"],
+  slug: null,
+  category: "concept",
+},
+"british-folk-revival": {
+  canonical: "ブリティッシュ・フォーク・リヴァイヴァル",
+  aliases: ["ブリティッシュ・フォーク・リヴァイヴァル", "ブリティッシュ・フォーク・リバイバル"],
+  slug: null,
+  category: "concept",
+},
 
   // ── 0012（折口信夫）──
   // 「死者の書」は0002（古代エジプトの文書）と同名なので、別エントリとして分離。
@@ -659,37 +1301,199 @@ export const entities = {
     "otsu-no-miko": {
     canonical: "大津皇子",
     aliases: ["大津皇子"],
-    slug: "0012",
+    slug: "null",
     category: "person",
   },
   "nakazawa-shinichi": {
     canonical: "中沢新一",
     aliases: ["中沢新一"],
-    slug: "0012",
+    slug: "null",
     category: "person",
   },
   "yoshimoto-takaaki": {
     canonical: "吉本隆明",
     aliases: ["吉本隆明"],
-    slug: "0012",
+    slug: "null",
     category: "person",
   },
     "kobayashi-hideo": {
     canonical: "小林秀雄",
     aliases: ["小林秀雄"],
-    slug: "0012",
+    slug: "null",
     category: "person",
   },
     "hasumi-shigehiko": {
     canonical: "蓮實重彦",
     aliases: ["蓮實重彦"],
-    slug: "0012",
+    slug: "null",
     category: "person",
   },
     "kawamoto-kihachiro": {
     canonical: "川本喜八郎",
     aliases: ["川本喜八郎"],
-    slug: "0012",
+    slug: "null",
     category: "person",
   },
+  "hashihaka-kofun": {
+  canonical: "箸墓古墳",
+  aliases: ["箸墓古墳", "箸墓"],
+  slug: null,
+  category: "work",
+},
+"himiko": {
+  canonical: "卑弥呼",
+  aliases: ["卑弥呼"],
+  slug: null,
+  category: "person",
+},
+"yamatototohimomosohime": {
+  canonical: "倭迹迹日百襲姫",
+  aliases: ["倭迹迹日百襲姫", "やまとととひももそひめのみこと"],
+  slug: null,
+  category: "person",
+},
+"kasai-shinya": {
+  canonical: "笠井新也",
+  aliases: ["笠井新也"],
+  slug: null,
+  category: "person",
+},
+"toritaniguchi-kofun": {
+  canonical: "鳥谷口古墳",
+  aliases: ["鳥谷口古墳"],
+  slug: null,
+  category: "work",
+},
+"ooku-no-himemiko": {
+  canonical: "大伯皇女",
+  aliases: ["大伯皇女", "おおくのひめみこ"],
+  slug: null,
+  category: "person",
+},
+"mount-nijo": {
+  canonical: "二上山",
+  aliases: ["二上山", "ふたかみやま"],
+  slug: null,
+  category: "work",
+},
+"manyoshu": {
+  canonical: "万葉集",
+  aliases: ["万葉集"],
+  slug: null,
+  category: "work",
+},
+"marebito": {
+  canonical: "まれびと",
+  aliases: ["まれびと", "客人"],
+  slug: null,
+  category: "concept",
+},
+"tamafuri": {
+  canonical: "たまふり",
+  aliases: ["たまふり", "魂振り"],
+  slug: null,
+  category: "concept",
+},
+"daijosai-no-hongi": {
+  canonical: "大嘗祭の本義（折口信夫）",
+  aliases: ["大嘗祭の本義"],
+  slug: null,
+  category: "work",
+},
+"ruikaseino": {
+  canonical: "類化性能",
+  aliases: ["類化性能"],
+  slug: null,
+  category: "concept",
+},
+"bekkaseino": {
+  canonical: "別化性能",
+  aliases: ["別化性能"],
+  slug: null,
+  category: "concept",
+},
+"ito-hiroshi-manyogaku": {
+  canonical: "伊藤博",
+  aliases: ["伊藤博"],
+  slug: null,
+  category: "person",
+},
+"shigajitsuhiko": {
+  canonical: "滋賀津彦",
+  aliases: ["滋賀津彦"],
+  slug: null,
+  category: "person",
+},
+"mimimotoji": {
+  canonical: "耳面刀自",
+  aliases: ["耳面刀自", "みみのもとじ"],
+  slug: null,
+  category: "person",
+},
+"fujiwara-toyonari": {
+  canonical: "藤原南家豊成",
+  aliases: ["藤原南家豊成", "ふじわらのなんけとよなり"],
+  slug: null,
+  category: "person",
+},
+"iratsume": {
+  canonical: "郎女（死者の書）",
+  aliases: ["郎女", "いらつめ"],
+  slug: null,
+  category: "person",
+},
+"taima-mandala": {
+  canonical: "当麻曼荼羅",
+  aliases: ["当麻曼荼羅"],
+  slug: null,
+  category: "work",
+},
+"taimadera": {
+  canonical: "当麻寺",
+  aliases: ["当麻寺"],
+  slug: null,
+  category: "work",
+},
+"yoshimoto-yu-as-bible": {
+  canonical: "喩としての聖書──マルコ伝（吉本隆明）",
+  aliases: ["喩としての聖書", "喩としての聖書──マルコ伝"],
+  slug: null,
+  category: "work",
+},
+"kobayashi-taema": {
+  canonical: "当麻（小林秀雄）",
+  aliases: ["当麻"],
+  slug: null,
+  category: "work",
+},
+"umewaka-manzaburo": {
+  canonical: "梅若万三郎",
+  aliases: ["梅若万三郎"],
+  slug: null,
+  category: "person",
+},
+"zeami": {
+  canonical: "世阿弥",
+  aliases: ["世阿弥"],
+  slug: null,
+  category: "person",
+},
+"kondo-yoko-shisha": {
+  canonical: "死者の書（近藤よう子・漫画版）",
+  aliases: ["死者の書"],
+  slug: null,
+  category: "work",
+},
+"kawamoto-shisha-film": {
+  canonical: "死者の書（川本喜八郎・映画）",
+  aliases: ["死者の書"],
+  slug: null,
+  category: "work",
+},
+"atavism": {
+  canonical: "間欠遺伝",
+  aliases: ["間欠遺伝", "アタヴィズム"],
+  slug: null,
+  category: "concept",
+},
 } as const;
