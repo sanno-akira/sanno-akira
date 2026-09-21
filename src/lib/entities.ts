@@ -429,7 +429,7 @@ export const entities = {
     slug: null,
     category: "person", 
   },
-  "stripsody ": {
+  "stripsody": {
     canonical: "ストリプソディ",
     aliases: ["ストリプソディ", "Stripsody "],
     slug: null,
@@ -1283,7 +1283,6 @@ export const entities = {
   slug: null,
   category: "concept",
 },
-
   // ── 0012（折口信夫）──
   // 「死者の書」は0002（古代エジプトの文書）と同名なので、別エントリとして分離。
   "orikuchi-shinobu": {
@@ -1496,6 +1495,7 @@ export const entities = {
   slug: null,
   category: "concept",
 },
+// ── 0013 ──
 "yamagishi-ryoko": {
   canonical: "山岸凉子",
   aliases: ["山岸凉子"],
@@ -1646,6 +1646,7 @@ export const entities = {
   slug: null,
   category: "person",
 },
+// ── 0014 ──
 "tange-kenzo": {
   canonical: "丹下健三",
   aliases: ["丹下健三", "Kenzo Tange"],
@@ -1814,6 +1815,7 @@ export const entities = {
   slug: null,
   category: "concept",
 },
+// ── 0015 ──
 "ronchamp-chapel": {
   canonical: "ロンシャンの礼拝堂",
   aliases: ["ロンシャンの礼拝堂", "ノートルダム・デュ・オー礼拝堂"],
@@ -2012,6 +2014,7 @@ export const entities = {
   slug: null,
   category: "concept",
 },
+// ── 0016 ──
 "jacques-tati": {
   canonical: "ジャック・タチ",
   aliases: ["ジャック・タチ", "Jacques Tati"],

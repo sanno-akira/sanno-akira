@@ -43,6 +43,64 @@ const posts = sorted.map(e => {
     ].join(' '),
   };
 });
+
+// ── 索引データの構築（ビルド時） ──
+const mentionMap = new Map<string, { num: string; title: string; slug: string; isPrimary: boolean }[]>();
+
+for (const entry of entries) {
+  const subjects: string[] = (entry.data as any).subjects ?? [];
+  for (const subjectId of subjects) {
+    if (!mentionMap.has(subjectId)) mentionMap.set(subjectId, []);
+    const list = mentionMap.get(subjectId)!;
+    const entitySlug = (entities as Record<string, any>)[subjectId]?.slug;
+    const isPrimary = entitySlug === entry.id;
+    if (!list.some(m => m.slug === entry.id)) {
+      list.push({ num: (entry.data as any).num, title: (entry.data as any).title, slug: entry.id, isPrimary });
+    }
+  }
+}
+
+for (const [id, e] of Object.entries(entities)) {
+  if (e.slug) {
+    if (!mentionMap.has(id)) mentionMap.set(id, []);
+    const list = mentionMap.get(id)!;
+    if (!list.some(m => m.slug === e.slug)) {
+      const matchEntry = entries.find(en => en.id === e.slug);
+      if (matchEntry) {
+        list.push({ num: (matchEntry.data as any).num, title: (matchEntry.data as any).title, slug: matchEntry.id, isPrimary: true });
+      }
+    }
+  }
+}
+
+for (const [, list] of mentionMap) {
+  list.sort((a, b) => {
+    if (a.isPrimary !== b.isPrimary) return a.isPrimary ? -1 : 1;
+    return a.num.localeCompare(b.num);
+  });
+}
+
+type IndexItem = {
+  canonical: string;
+  mentions: { num: string; title: string; slug: string; isPrimary: boolean }[];
+};
+
+const indexPerson: IndexItem[] = [];
+const indexWork: IndexItem[] = [];
+const indexConcept: IndexItem[] = [];
+
+for (const [id, e] of Object.entries(entities)) {
+  const cat = (e as any).category;
+  if (cat !== 'person' && cat !== 'work' && cat !== 'concept') continue;
+  const item: IndexItem = { canonical: e.canonical, mentions: mentionMap.get(id) ?? [] };
+  if (cat === 'person') indexPerson.push(item);
+  else if (cat === 'work') indexWork.push(item);
+  else indexConcept.push(item);
+}
+
+indexPerson.sort((a, b) => a.canonical.localeCompare(b.canonical, 'ja'));
+indexWork.sort((a, b) => a.canonical.localeCompare(b.canonical, 'ja'));
+indexConcept.sort((a, b) => a.canonical.localeCompare(b.canonical, 'ja'));
 ---
 
 <BaseLayout title="My 1000 Favorite Things | 山王晶">
@@ -53,68 +111,193 @@ const posts = sorted.map(e => {
     <div class="page-desc">私が好きなヒト・コト・モノについての1000のコラム。</div>
   </div>
 
-  <div class="filter-section">
-    <div class="filter-row">
-      <span class="filter-label">ジャンル</span>
-      <div class="filter-btns" id="genre-btns">
-        {genres.map(g => (
-          <button class={g === 'すべて' ? 'filter-btn active' : 'filter-btn'} data-genre={g}>{g}</button>
-        ))}
-      </div>
-    </div>
-    <div class="filter-row">
-      <span class="filter-label">年代</span>
-      <div class="filter-btns" id="era-btns">
-        {eras.map(e => (
-          <button class={e === 'すべて' ? 'filter-btn active' : 'filter-btn'} data-era={e}>{e}</button>
-        ))}
-      </div>
-    </div>
-    <div class="filter-row">
-      <span class="filter-label">地域</span>
-      <div class="filter-btns" id="region-btns">
-        {regions.map(r => (
-          <button class={r === 'すべて' ? 'filter-btn active' : 'filter-btn'} data-region={r}>{r}</button>
-        ))}
-      </div>
-    </div>
-    <div class="filter-row">
-      <span class="filter-label">検索</span>
-      <div class="search-wrap">
-        <input class="search-input" id="search-input" type="text" placeholder="タイトル・作家名・キーワード">
-        <button class="search-btn" id="search-clear">クリア</button>
-      </div>
-    </div>
+  <!-- ── メインタブ ── -->
+  <div class="main-tab-bar" id="main-tab-bar">
+    <button class="main-tab active" data-tab="search">コラム検索</button>
+    <button class="main-tab" data-tab="person">人名・グループ名<span class="main-tab-count">{indexPerson.length}</span></button>
+    <button class="main-tab" data-tab="work">作品名<span class="main-tab-count">{indexWork.length}</span></button>
+    <button class="main-tab" data-tab="concept">概念・運動<span class="main-tab-count">{indexConcept.length}</span></button>
   </div>
 
-  <div class="result-info" id="result-info">全{posts.length}件</div>
-
-  <div class="card-list" id="card-list">
-    {posts.map(p => (
-   <a   
-        href={'/column/' + p.id}
-        class="card"
-        data-genre={p.genre}
-        data-era={p.era}
-        data-region={p.region}
-        data-search={p.searchText}
-      >
-        <div class="accent-bar" style={'background:' + p.color + ';'}></div>
-        <div class="card-inner">
-          <div class="card-num">{p.num}　{p.genre}</div>
-          <div class="card-title">{p.title}（{p.yearLabel}）</div>
-          <div class="card-desc">{p.description}</div>
+  <!-- ── コラム検索パネル ── -->
+  <div class="tab-panel active" id="panel-search">
+    <div class="filter-section">
+      <div class="filter-row">
+        <span class="filter-label">ジャンル</span>
+        <div class="filter-btns" id="genre-btns">
+          {genres.map(g => (
+            <button class={g === 'すべて' ? 'filter-btn active' : 'filter-btn'} data-genre={g}>{g}</button>
+          ))}
         </div>
-      </a>
-    ))}
+      </div>
+      <div class="filter-row">
+        <span class="filter-label">年代</span>
+        <div class="filter-btns" id="era-btns">
+          {eras.map(e => (
+            <button class={e === 'すべて' ? 'filter-btn active' : 'filter-btn'} data-era={e}>{e}</button>
+          ))}
+        </div>
+      </div>
+      <div class="filter-row">
+        <span class="filter-label">地域</span>
+        <div class="filter-btns" id="region-btns">
+          {regions.map(r => (
+            <button class={r === 'すべて' ? 'filter-btn active' : 'filter-btn'} data-region={r}>{r}</button>
+          ))}
+        </div>
+      </div>
+      <div class="filter-row">
+        <span class="filter-label">検索</span>
+        <div class="search-wrap">
+          <input class="search-input" id="search-input" type="text" placeholder="タイトル・作家名・キーワード">
+          <button class="search-btn" id="search-clear">クリア</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-info" id="result-info">全{posts.length}件</div>
+
+    <div class="card-list" id="card-list">
+      {posts.map(p => (
+        <a
+          href={'/column/' + p.id}
+          class="card"
+          data-genre={p.genre}
+          data-era={p.era}
+          data-region={p.region}
+          data-search={p.searchText}
+        >
+          <div class="accent-bar" style={'background:' + p.color + ';'}></div>
+          <div class="card-inner">
+            <div class="card-num">{p.num}　{p.genre}</div>
+            <div class="card-title">{p.title}（{p.yearLabel}）</div>
+            <div class="card-desc">{p.description}</div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="no-results" id="no-results">該当する記事が見つかりませんでした。</div>
+
+    <div class="pagination" id="pagination">
+      <button class="pagination-btn" id="prev-btn">← 前のページ</button>
+      <span class="pagination-info" id="pagination-info"></span>
+      <button class="pagination-btn" id="next-btn">次のページ →</button>
+    </div>
   </div>
 
-  <div class="no-results" id="no-results">該当する記事が見つかりませんでした。</div>
+  <!-- ── 人名・グループ名パネル ── -->
+  <div class="tab-panel" id="panel-person">
+    <div class="index-search-wrap">
+      <input class="index-search-input" id="index-search-person" type="text" placeholder="名前で絞り込み">
+    </div>
+    <div class="index-info" id="index-info-person">{indexPerson.length}件</div>
+    <ul class="index-list" id="index-list-person">
+      {indexPerson.map(item => (
+        <li class="index-item" data-name={item.canonical}>
+          <div class="index-row">
+            <span class={item.mentions.length > 0 ? 'index-name' : 'index-name dimmed'}>
+              {item.canonical}
+            </span>
+            <span class="index-refs">
+              {item.mentions.length > 0 ? (
+                item.mentions.map((m, i) => (
+                  <span>
+                    {i > 0 && <span class="sep">·</span>}
+                    <a
+                      href={`/column/${m.slug}`}
+                      class={m.isPrimary ? 'ref-link primary' : 'ref-link mention'}
+                      title={m.title}
+                    >
+                      {m.num}
+                    </a>
+                  </span>
+                ))
+              ) : (
+                <span class="no-ref">—</span>
+              )}
+            </span>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <div class="no-results index-no-results" id="no-results-person">該当する項目が見つかりませんでした。</div>
+  </div>
 
-  <div class="pagination" id="pagination">
-    <button class="pagination-btn" id="prev-btn">← 前のページ</button>
-    <span class="pagination-info" id="pagination-info"></span>
-    <button class="pagination-btn" id="next-btn">次のページ →</button>
+  <!-- ── 作品名パネル ── -->
+  <div class="tab-panel" id="panel-work">
+    <div class="index-search-wrap">
+      <input class="index-search-input" id="index-search-work" type="text" placeholder="作品名で絞り込み">
+    </div>
+    <div class="index-info" id="index-info-work">{indexWork.length}件</div>
+    <ul class="index-list" id="index-list-work">
+      {indexWork.map(item => (
+        <li class="index-item" data-name={item.canonical}>
+          <div class="index-row">
+            <span class={item.mentions.length > 0 ? 'index-name' : 'index-name dimmed'}>
+              {item.canonical}
+            </span>
+            <span class="index-refs">
+              {item.mentions.length > 0 ? (
+                item.mentions.map((m, i) => (
+                  <span>
+                    {i > 0 && <span class="sep">·</span>}
+                    <a
+                      href={`/column/${m.slug}`}
+                      class={m.isPrimary ? 'ref-link primary' : 'ref-link mention'}
+                      title={m.title}
+                    >
+                      {m.num}
+                    </a>
+                  </span>
+                ))
+              ) : (
+                <span class="no-ref">—</span>
+              )}
+            </span>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <div class="no-results index-no-results" id="no-results-work">該当する項目が見つかりませんでした。</div>
+  </div>
+
+  <!-- ── 概念・運動パネル ── -->
+  <div class="tab-panel" id="panel-concept">
+    <div class="index-search-wrap">
+      <input class="index-search-input" id="index-search-concept" type="text" placeholder="概念名で絞り込み">
+    </div>
+    <div class="index-info" id="index-info-concept">{indexConcept.length}件</div>
+    <ul class="index-list" id="index-list-concept">
+      {indexConcept.map(item => (
+        <li class="index-item" data-name={item.canonical}>
+          <div class="index-row">
+            <span class={item.mentions.length > 0 ? 'index-name' : 'index-name dimmed'}>
+              {item.canonical}
+            </span>
+            <span class="index-refs">
+              {item.mentions.length > 0 ? (
+                item.mentions.map((m, i) => (
+                  <span>
+                    {i > 0 && <span class="sep">·</span>}
+                    <a
+                      href={`/column/${m.slug}`}
+                      class={m.isPrimary ? 'ref-link primary' : 'ref-link mention'}
+                      title={m.title}
+                    >
+                      {m.num}
+                    </a>
+                  </span>
+                ))
+              ) : (
+                <span class="no-ref">—</span>
+              )}
+            </span>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <div class="no-results index-no-results" id="no-results-concept">該当する項目が見つかりませんでした。</div>
   </div>
 </BaseLayout>
 
@@ -122,6 +305,28 @@ const posts = sorted.map(e => {
   .page-header { max-width: 860px; margin: 0 auto; padding: 28px 24px 20px; border-bottom: 0.5px solid #ddd; }
   .page-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
   .page-desc { font-size: 12px; color: #888; }
+
+  /* メインタブ */
+  .main-tab-bar {
+    max-width: 860px; margin: 0 auto; display: flex; gap: 0;
+    border-bottom: 0.5px solid #ddd; padding: 0 24px;
+  }
+  .main-tab {
+    padding: 12px 0; margin-right: 24px; font-size: 13px;
+    font-family: 'Noto Sans JP', sans-serif; background: none; border: none;
+    border-bottom: 2px solid transparent; cursor: pointer; color: #888;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .main-tab:last-child { margin-right: 0; }
+  .main-tab:hover { color: #1a1a1a; }
+  .main-tab.active { color: #1a1a1a; border-bottom-color: #1a1a1a; }
+  .main-tab-count { font-size: 11px; color: #aaa; margin-left: 4px; }
+
+  /* パネル */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* フィルター（検索タブ） */
   .filter-section { max-width: 860px; margin: 0 auto; padding: 20px 24px; border-bottom: 0.5px solid #ddd; display: flex; flex-direction: column; gap: 14px; }
   .filter-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
   .filter-label { font-size: 11px; color: #888; letter-spacing: 0.08em; flex-shrink: 0; width: 48px; }
@@ -148,17 +353,49 @@ const posts = sorted.map(e => {
   .pagination-btn:disabled { color: #ccc; border-color: #eee; cursor: default; }
   .pagination-info { font-size: 11px; color: #aaa; }
 
+  /* 索引タブ */
+  .index-search-wrap { max-width: 860px; margin: 0 auto; padding: 16px 24px; border-bottom: 0.5px solid #ddd; }
+  .index-search-input { width: 100%; box-sizing: border-box; font-size: 12px; border: 0.5px solid #ccc; padding: 6px 12px; font-family: 'Noto Sans JP', sans-serif; outline: none; }
+  .index-search-input:focus { border-color: #999; }
+  .index-info { max-width: 860px; margin: 0 auto; padding: 10px 24px; font-size: 11px; color: #aaa; border-bottom: 0.5px solid #ddd; }
+  .index-list { list-style: none; padding: 0; margin: 0; max-width: 860px; margin: 0 auto; }
+  .index-item { border-bottom: 0.5px solid #eee; padding: 0 24px; }
+  .index-row { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; }
+  .index-name { font-size: 14px; line-height: 1.6; color: #1a1a1a; }
+  .index-name.dimmed { color: #aaa; }
+  .index-refs { font-size: 11px; flex-shrink: 0; margin-left: 16px; white-space: nowrap; }
+  .ref-link.primary { color: #1a1a1a; font-weight: 700; text-decoration: none; }
+  .ref-link.primary:hover { text-decoration: underline; }
+  .ref-link.mention { color: #aaa; text-decoration: none; }
+  .ref-link.mention:hover { color: #1a1a1a; text-decoration: underline; }
+  .sep { margin: 0 3px; color: #ccc; }
+  .no-ref { color: #ddd; }
+  .index-no-results { margin-top: 40px; }
+
   @media (max-width: 640px) {
-    .page-header,
-    .filter-section,
-    .result-info,
-    .card-list,
-    .no-results,
-    .pagination { padding-left: 16px; padding-right: 16px; }
+    .page-header, .filter-section, .result-info, .card-list, .no-results, .pagination { padding-left: 16px; padding-right: 16px; }
+    .main-tab-bar { padding: 0 16px; }
+    .main-tab { font-size: 12px; margin-right: 16px; }
+    .index-search-wrap, .index-info, .index-item { padding-left: 16px; padding-right: 16px; }
   }
 </style>
 
 <script>
+  // ── タブ切り替え ──
+  const mainTabs = document.querySelectorAll('.main-tab');
+  const panels = document.querySelectorAll('.tab-panel');
+
+  mainTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = (tab as HTMLElement).dataset.tab!;
+      mainTabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + target)?.classList.add('active');
+    });
+  });
+
+  // ── コラム検索（既存ロジック） ──
   const PER_PAGE = 10;
   const cards = Array.from(document.querySelectorAll('.card')) as HTMLElement[];
   const resultInfo     = document.getElementById('result-info') as HTMLElement;
@@ -257,4 +494,37 @@ const posts = sorted.map(e => {
   });
 
   applyFilter();
+
+  // ── 索引の絞り込み ──
+  function setupIndexFilter(inputId: string, listId: string, infoId: string, noResultsId: string) {
+    const input = document.getElementById(inputId) as HTMLInputElement;
+    const list = document.getElementById(listId) as HTMLElement;
+    const info = document.getElementById(infoId) as HTMLElement;
+    const noRes = document.getElementById(noResultsId) as HTMLElement;
+    if (!input || !list) return;
+
+    const items = Array.from(list.querySelectorAll('.index-item')) as HTMLElement[];
+    const totalCount = items.length;
+    let timer: ReturnType<typeof setTimeout>;
+
+    input.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        const q = normalize(input.value);
+        let visible = 0;
+        items.forEach(item => {
+          const name = normalize(item.dataset.name ?? '');
+          const show = !q || name.includes(q);
+          item.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+        if (info) info.textContent = q ? visible + ' / ' + totalCount + '件' : totalCount + '件';
+        if (noRes) noRes.style.display = visible === 0 ? 'block' : 'none';
+      }, 150);
+    });
+  }
+
+  setupIndexFilter('index-search-person', 'index-list-person', 'index-info-person', 'no-results-person');
+  setupIndexFilter('index-search-work', 'index-list-work', 'index-info-work', 'no-results-work');
+  setupIndexFilter('index-search-concept', 'index-list-concept', 'index-info-concept', 'no-results-concept');
 </script>
